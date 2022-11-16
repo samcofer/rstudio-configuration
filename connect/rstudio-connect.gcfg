@@ -40,7 +40,7 @@ SenderEmail = "donotreply-connect@example.com"
 ; -------------- Package Source Configuration -------------- ;
 
 [RPackageRepository "CORPORATE"]
-URL = "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
+;URL = "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
 
 ; -------------- SMTP Email Configuration -------------- ;
 [SMTP]
