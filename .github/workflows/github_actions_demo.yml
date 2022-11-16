@@ -19,4 +19,5 @@ jobs:
         uses: lycheeverse/lychee-action@v1.5.4
         with:
           fail: true
+          args: --verbose --no-progress './**/*' './*'
       - run: echo "🍏 This job's status is ${{ job.status }}."
