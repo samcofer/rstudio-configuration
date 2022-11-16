@@ -1,0 +1,267 @@
+;RStudio Connect Configuration File
+;
+; Configuration Options URL: https://docs.rstudio.com/connect/admin/appendix/configuration/
+
+[Server]
+
+; Address is a public URL for this RStudio Connect server. Must be configured
+; to enable features like including links to your content in emails. If
+; Connect is deployed behind an HTTP proxy, this should be the URL for Connect
+; in terms of that proxy.
+;
+;Address = "http://rstudio-connect.example.com"
+DataDir = /path/to/application/storage
+
+
+; -------------- Server Email Configuration -------------- ;
+
+;https://docs.rstudio.com/connect/admin/email/
+
+; SenderEmail is an email address used by RStudio Connect to send outbound
+; email. The system will not be able to send administrative email until this
+; setting is configured.
+
+SenderEmail = "donotreply-connect@example.com"
+
+; Uncomment one of the following definitions to enable email-related features.
+;EmailProvider = "SMTP"
+;EmailProvider = "sendmail"
+
+;https://docs.rstudio.com/connect/admin/appendix/configuration/#Server.MailAll
+;MailAll = true
+
+; -------------- Viewer Permissions Request Configuration -------------- ;
+
+;https://docs.rstudio.com/connect/admin/appendix/configuration/#Server.ViewerKiosk
+
+;ViewerKiosk = true
+
+; -------------- Package Source Configuration -------------- ;
+
+[RPackageRepository "CORPORATE"]
+URL = "https://packagemanager.company.com/"
+
+; -------------- SMTP Email Configuration -------------- ;
+[SMTP]
+Host = "smtp.example.com"
+Port = 25
+SSL = false
+StartTLS = "detect"
+
+;User = "no-reply@example.com"
+;Password = "secret"
+
+; -------------- WebServer Configuration -------------- ;
+;[HTTP]
+;Listen = :3939
+;NoWarning = true
+
+[HTTPS]
+; RStudio Connect will listen on this network address for HTTPS connections.
+Listen = :443
+;Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate authority,
+;the certificate file should be the concatenation of the server's certificate followed by the CA's certificate
+Certificate =  /path/to/certificate/connect.crt
+;Path to a PEM encoded private key file corresponding to the certificate specified with
+Key = /path/to/key/connect.key
+; Force HTTPS
+; https://docs.rstudio.com/connect/admin/security/#guaranteeing-https
+Permanent = True
+MinimumTLS = 1.2
+
+; -------------- Supported Content Types Configuration -------------- ;
+
+;https://docs.rstudio.com/connect/admin/r/#r-versions
+[R]
+Executable = /shared/R/3.3.1/bin/R
+Executable = /shared/R/3.2.4/bin/R
+Executable = /shared/R/3.1.3/bin/R
+
+;https://docs.rstudio.com/connect/admin/python/
+;Python package source configuration via pip.conf
+;https://docs.rstudio.com/connect/admin/python/package-management/#configuring-pip
+[Python]
+Enabled = true
+Executable = /opt/python/3.10.7/bin/python
+Executable = /opt/python/3.7.7/bin/python
+
+;https://docs.rstudio.com/connect/admin/quarto/
+[Quarto]
+Enabled = true
+Executable = "/opt/quarto/v1.2.253/bin/quarto"
+Executable = "/opt/quarto/v1.1.251/bin/quarto"
+
+; -------------- Logging Configuration -------------- ;
+
+[Logging]
+AccessLogFormat = JSON
+ServiceLogFormat = JSON
+
+; -------------- Permissions/Authorization Configuration -------------- ;
+
+;https://docs.rstudio.com/connect/admin/appendix/configuration/#Authorization.Settings
+
+;[Authorization]
+
+;UserRoleMapping = true
+;ViewerRoleMapping = "The values or DN that should map to the viewer role."
+;PublisherRoleMapping = "The values or DN that should map to the publisher role."
+;AdministratorRoleMapping = "The values or DN that should map to the administrator role."
+
+; --------------Active Directory Authentication-------------- ;
+
+; https://docs.rstudio.com/connect/admin/authentication/ldap-based/active-directory-double-bind/
+
+[Authentication]
+Provider = ldap
+Lifetime = 12h
+Inactivity = 8h
+APIKeyAuth = true
+;Enable Captcha
+;https://docs.rstudio.com/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
+;ChallengeResponseEnabled = true
+
+[LDAP "Active Directory with Service Credentials"]
+
+; For legacy SSL (ldaps) use these:
+ServerAddress = ldaps.company.com:636
+TLS = true
+; Or for TLS (StartTLS extension) use these:
+; ServerAddress = ldap.company.com:389
+; StartTLS = true
+
+TLSCACertificate= /etc/ssl/cert/ca.pem
+; For TLS/SSL testing purposes only:
+; ServerTLSInsecure = true
+
+; Service credentials (recommended):
+BindDN = "EXAMPLE\\admin"
+BindPassword = "XXXXXXXX"
+; Or anonymous bind (less secure):
+; AnonymousBind = true
+
+; Users
+UserSearchBaseDN = "OU=Users,DC=example,DC=com"
+UserObjectClass = "user"
+UniqueIdAttribute = "objectGUID"
+UsernameAttribute = "sAMAccountName"
+UserEmailAttribute = "mail"
+UserFirstNameAttribute = "givenName"
+UserLastNameAttribute = "sn"
+
+; Groups
+GroupSearchBaseDN = "OU=Users,DC=example,DC=com"
+GroupObjectClass = "group"
+GroupUniqueIdAttribute = "objectGUID"
+GroupNameAttribute = "sAMAccountName"
+; Enable this for a better user experience, unless
+; managing a large number of groups is a concern:
+;GroupsAutoProvision = true
+
+; Use this argument to restrict login to particular groups
+; There can be multiple entries for permitted login information
+;PermittedLoginGroup = cn=admins,ou=group,dc=company,dc=com
+;PermittedLoginGroup = cn=scientists,ou=group,dc=company,dc=com
+
+
+; When attempting to troubleshoot a problem relating to LDAP,
+; you can enable more verbose logging by enabling the following line
+;Logging = true
+
+; -------------- LDAP Authentication-------------- ;
+
+; https://docs.rstudio.com/connect/admin/authentication/ldap-based/ldap-double-bind/
+
+[Authentication]
+Provider = ldap
+Lifetime = 12h
+Inactivity = 8h
+APIKeyAuth = true
+;Enable Captcha
+;https://docs.rstudio.com/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
+;ChallengeResponseEnabled = true
+
+[LDAP "Sample LDAP Configuration With Service Credentials"]
+
+; For legacy SSL (ldaps) use these:
+ServerAddress = ldaps.company.com:636
+TLS = true
+
+; Or for TLS (StartTLS extension) use these:
+; ServerAddress = ldap.company.com:389
+; StartTLS = true
+
+TLSCACertificate= /etc/ssl/cert/ca.pem
+
+; For TLS/SSL testing purposes only:
+; ServerTLSInsecure = true
+
+; Service credentials (recommended):
+BindDN = "uid=admin,OU=users,DC=example,DC=com"
+BindPassword = "XXXXXXXX"
+
+; Or anonymous bind (less secure):
+; AnonymousBind = true
+
+; Users (OpenLDAP example)
+UserSearchBaseDN = "OU=Users,DC=example,DC=com"
+UserObjectClass = "posixAccount"
+; UniqueIdAttribute - vendor-specific object attribute
+; Please refer to your LDAP vendor documentation for the correct value.
+; (OpenLDAP) UniqueIdAttribute = "entryUUID"
+; (Oracle OID) UniqueIdAttribute = "orclGuid"
+; (IBM RACF) UniqueIdAttribute = "ibm-entryUUID"
+; (Novell eDirectory) UniqueIdAttribute = "GUID"
+; (389 Directory Server) UniqueIdAttribute = "nsUniqueID"
+UniqueIdAttribute = "entryUUID"
+UsernameAttribute = "uid"
+UserEmailAttribute = "mail"
+UserFirstNameAttribute = "givenName"
+UserLastNameAttribute = "sn"
+
+; Groups (OpenLDAP example)
+GroupSearchBaseDN = "OU=Users,DC=example,DC=com"
+GroupObjectClass = "posixGroup"
+
+; GroupUniqueIdAttribute - vendor-specific object attribute, same as the user one
+GroupUniqueIdAttribute = "entryUUID"
+GroupNameAttribute = "cn"
+
+; Enable this for a better user experience, unless
+; managing a large number of groups is a concern:
+;GroupsAutoProvision = true
+
+; When attempting to troubleshoot a problem relating to LDAP,
+; you can enable more verbose logging by enabling the following line
+;Logging = true
+
+; -------------- SAML Authentication-------------- ;
+
+;https://docs.rstudio.com/connect/admin/authentication/saml-based/saml/
+
+[Authentication]
+
+;Specifies the type of user authentication. Allowed values are password, ldap, pam, oauth2, proxy or saml
+
+Provider = saml
+Lifetime = 12h
+Inactivity = 8h
+APIKeyAuth = true
+
+[SAML]
+
+IdPMetaDataPath = /path/to/IDPmetadata/IDP.xml
+
+IdPSingleSignOnPostBinding = true
+UniqueIDAttribute = NameID
+NameIDFormat = unspecified
+UsernameAttribute = Username
+FirstNameAttribute = FirstName
+LastNameAttribute = LastName
+EmailAttribute = Email
+GroupsAttribute = Groups
+GroupsAutoProvision = true
+
+; When attempting to troubleshoot a problem relating to LDAP,
+; you can enable more verbose logging by enabling the following line
+;Logging = true

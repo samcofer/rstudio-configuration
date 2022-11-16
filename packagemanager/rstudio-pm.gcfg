@@ -1,0 +1,103 @@
+; RStudio Package Manager configuration file
+
+[Server]
+; Address is a public URL for this RStudio Package Manager server. If Package Manager
+; is deployed behind an HTTP proxy, this should be the URL for Package Manager in
+; terms of that proxy. It must be configured if RSPM is served from a subdirectory like
+; `/rspm` to facilitate generating URLs for the `rspm url create` command, Swagger docs,
+; and PyPI simple index pages.
+
+Address = https://rstudio-pm.company.com
+
+
+; Git sources require a configured R installation. R is often installed at `/usr/lib/R`
+; or `/usr/lib64/R`.
+
+RVersion = /opt/R/#.#.#
+
+
+; Customize the data directory if necessary. This is where all packages and metadata are
+; stored by default. Refer to Admin Guide for details.
+;https://docs.posit.co/rspm/admin/appendix/configuration/#Server.DataDir
+
+DataDir = /mnt/rspm/data
+
+;[HTTP]
+; RStudio Package Manager will listen on this network address for HTTP connections.
+;Listen =
+
+[HTTPS]
+; Path to a TLS certificate file. If the certificate is signed by a certificate authority, the
+; certificate file should be the concatenation of the server's certificate followed by the CA's
+; certificate. Must be paired with `HTTPS.Key`.
+;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Settings
+
+Certificate = "/path/to/certificate/file"
+
+
+; Path to a private key file corresponding to the certificate specified with `HTTPS.Certificate`.
+; Required when `HTTPS.Certificate` is specified.
+
+Key = "/path/to/key"
+
+;RStudio Package Manager will listen on this network address for HTTPS connections.
+;The network address can be of the form :443 or 192.168.0.1:443.
+;Either HTTP.Listen or HTTPS.Listen is required.
+
+Listen = ":443"
+
+;Advertises to all visitors that this server should only ever be hosted securely via HTTPS.
+;WARNING: if this is set to true -- even temporarily -- visitors may be permanently denied
+;access to your server over an unsecured (non-HTTPS) protocol. This sets the secure flag on all
+;session cookies and adds a Strict-Transport-Security HTTP header with a value of 30 days.
+;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Permanent
+
+Permanent = true
+
+[HttpRedirect]
+
+Listen = ":80"
+
+[CRAN]
+; Customize the default schedule for CRAN sync.
+;SyncSchedule = "0 0 * * *"
+
+[Bioconductor]
+; Customize the default schedule for Bioconductor syncs.
+;SyncSchedule = "0 2 * * *"
+
+[PyPI]
+; Customize the default schedule for PyPI syncs.
+;SyncSchedule = "0 1 * * *"
+
+; Configure Git if you are intending to build and share packages stored in Git repositories.
+;https://docs.posit.co/rspm/admin/appendix/configuration/#git
+[Git]
+; The amount of time to wait between polling git repos to look for package changes.
+;PollInterval = 5m
+;
+; The maximum number of times to attempt building a git package when the build fails.
+;BuildRetries = 3
+
+;https://docs.posit.co/rspm/admin/appendix/configuration/#binaries
+[Binaries]
+Distributions = "all"
+
+[Authentication]
+APITokenAuth = true
+
+
+[Database]
+Provider = postgres
+
+[Git]
+BuilderDir = /tmp/git
+
+[Postgres]
+URL = postgres://rspm_app@soleng-staging-rds1.c17bsiywm9pt.us-east-2.rds.amazonaws.com:5432/postgres?sslmode=disable&options=-csearch_path=rspm
+Password = ud8pJVpFAlWGMaBGBL65tSwgNkfKuIy0AA7
+
+[Metrics]
+Enabled = true
+
+

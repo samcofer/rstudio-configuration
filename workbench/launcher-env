@@ -1,0 +1,16 @@
+#Launcher Environment Configuration
+#https://docs.posit.co/ide/server-pro/job_launcher/configuration.html#launcher-environment
+
+#JobType: session
+#Environment: IS_LAUNCHER_SESSION=1
+# IS_ADHOC_JOB=0
+# USER_HOME=/home/{USER}
+
+#JobType: adhoc
+#Environment: IS_LAUNCHER_SESSION=0
+# IS_ADHOC_JOB=1
+# USER_HOME=/home/{USER}
+
+#JobType: any
+#Cluster: Kubernetes
+#ENVIRONMENT: IS_KUBERNETES=1
