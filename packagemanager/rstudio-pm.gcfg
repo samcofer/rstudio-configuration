@@ -94,8 +94,8 @@ Provider = postgres
 BuilderDir = /tmp/git
 
 [Postgres]
-URL = postgres://rspm_app@soleng-staging-rds1.c17bsiywm9pt.us-east-2.rds.amazonaws.com:5432/postgres?sslmode=disable&options=-csearch_path=rspm
-Password = ud8pJVpFAlWGMaBGBL65tSwgNkfKuIy0AA7
+URL = postgres://username@postgres_url.com
+Password = password
 
 [Metrics]
 Enabled = true
