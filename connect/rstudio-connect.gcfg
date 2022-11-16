@@ -9,14 +9,14 @@
 ; Connect is deployed behind an HTTP proxy, this should be the URL for Connect
 ; in terms of that proxy.
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
-Address = "http://rstudio-connect.example.com"
+Address = "http://posit-connect.example.com"
 
 DataDir = /path/to/application/storage
 
 
 ; -------------- Server Email Configuration -------------- ;
 
-;https://docs.rstudio.com/connect/admin/email/
+;https://docs.posit.co/connect/admin/email/
 
 ; SenderEmail is an email address used by RStudio Connect to send outbound
 ; email. The system will not be able to send administrative email until this
@@ -28,12 +28,12 @@ SenderEmail = "donotreply-connect@example.com"
 ;EmailProvider = "SMTP"
 ;EmailProvider = "sendmail"
 
-;https://docs.rstudio.com/connect/admin/appendix/configuration/#Server.MailAll
+;https://docs.posit.co/connect/admin/appendix/configuration/#Server.MailAll
 ;MailAll = true
 
 ; -------------- Viewer Permissions Request Configuration -------------- ;
 
-;https://docs.rstudio.com/connect/admin/appendix/configuration/#Server.ViewerKiosk
+;https://docs.posit.co/connect/admin/appendix/configuration/#Server.ViewerKiosk
 
 ;ViewerKiosk = true
 
@@ -66,27 +66,27 @@ Certificate =  /path/to/certificate/connect.crt
 ;Path to a PEM encoded private key file corresponding to the certificate specified with
 Key = /path/to/key/connect.key
 ; Force HTTPS
-; https://docs.rstudio.com/connect/admin/security/#guaranteeing-https
+; https://docs.posit.co/connect/admin/security/#guaranteeing-https
 Permanent = True
 MinimumTLS = 1.2
 
 ; -------------- Supported Content Types Configuration -------------- ;
 
-;https://docs.rstudio.com/connect/admin/r/#r-versions
+;https://docs.posit.co/connect/admin/r/#r-versions
 [R]
 Executable = /shared/R/3.3.1/bin/R
 Executable = /shared/R/3.2.4/bin/R
 Executable = /shared/R/3.1.3/bin/R
 
-;https://docs.rstudio.com/connect/admin/python/
+;https://docs.posit.co/connect/admin/python/
 ;Python package source configuration via pip.conf
-;https://docs.rstudio.com/connect/admin/python/package-management/#configuring-pip
+;https://docs.posit.co/connect/admin/python/package-management/#configuring-pip
 [Python]
 Enabled = true
 Executable = /opt/python/3.10.7/bin/python
 Executable = /opt/python/3.7.7/bin/python
 
-;https://docs.rstudio.com/connect/admin/quarto/
+;https://docs.posit.co/connect/admin/quarto/
 [Quarto]
 Enabled = true
 Executable = "/opt/quarto/v1.2.253/bin/quarto"
@@ -100,7 +100,7 @@ ServiceLogFormat = JSON
 
 ; -------------- Permissions/Authorization Configuration -------------- ;
 
-;https://docs.rstudio.com/connect/admin/appendix/configuration/#Authorization.Settings
+;https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.Settings
 
 ;[Authorization]
 
@@ -111,7 +111,7 @@ ServiceLogFormat = JSON
 
 ; --------------Active Directory Authentication-------------- ;
 
-; https://docs.rstudio.com/connect/admin/authentication/ldap-based/active-directory-double-bind/
+; https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/
 
 [Authentication]
 Provider = ldap
@@ -119,7 +119,7 @@ Lifetime = 12h
 Inactivity = 8h
 APIKeyAuth = true
 ;Enable Captcha
-;https://docs.rstudio.com/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
+;https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
 ;ChallengeResponseEnabled = true
 
 [LDAP "Active Directory with Service Credentials"]
@@ -171,7 +171,7 @@ GroupNameAttribute = "sAMAccountName"
 
 ; -------------- LDAP Authentication-------------- ;
 
-; https://docs.rstudio.com/connect/admin/authentication/ldap-based/ldap-double-bind/
+; https://docs.posit.co/connect/admin/authentication/ldap-based/ldap-double-bind/
 
 [Authentication]
 Provider = ldap
@@ -179,7 +179,7 @@ Lifetime = 12h
 Inactivity = 8h
 APIKeyAuth = true
 ;Enable Captcha
-;https://docs.rstudio.com/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
+;https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
 ;ChallengeResponseEnabled = true
 
 [LDAP "Sample LDAP Configuration With Service Credentials"]
@@ -238,7 +238,7 @@ GroupNameAttribute = "cn"
 
 ; -------------- SAML Authentication-------------- ;
 
-;https://docs.rstudio.com/connect/admin/authentication/saml-based/saml/
+;https://docs.posit.co/connect/admin/authentication/saml-based/saml/
 
 [Authentication]
 

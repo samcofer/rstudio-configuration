@@ -7,7 +7,7 @@
 ; `/rspm` to facilitate generating URLs for the `rspm url create` command, Swagger docs,
 ; and PyPI simple index pages.
 
-Address = https://rstudio-pm.company.com
+Address = https://posit-pm.company.com
 
 
 ; Git sources require a configured R installation. R is often installed at `/usr/lib/R`

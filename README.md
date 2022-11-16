@@ -11,13 +11,13 @@ Repository Styling Guide:
 #-----------------------------------------------------------------------------------------#
 # Admin Dashboard Configuration
 #
-# https://docs.rstudio.com/ide/server-pro/server_management/administrative_dashboard.html
+# https://docs.posit.co/ide/server-pro/server_management/administrative_dashboard.html
 # The Admin Dashboard is not enabled by default (http://<server-address>/admin)
 # Admin-superuser-group can: 1.Suspend or terminate active sessions, 2.Assume control of active sessions
 # (e.g. for troubleshooting), and 3.Login to RStudio as any other server user
 admin-enabled=1
-admin-group=rstudio_admin
-admin-superuser-group=rstudio_superuser
+admin-group=posit_admin
+admin-superuser-group=posit_superuser
 admin-monitor-log-use-server-time-zone=1
 #-----------------------------------------------------------------------------------------#
 ```
@@ -31,7 +31,7 @@ admin-monitor-log-use-server-time-zone=1
 ; Connect is deployed behind an HTTP proxy, this should be the URL for Connect
 ; in terms of that proxy.
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
-Address = "http://rstudio-connect.example.com"
+Address = "http://posit-connect.example.com"
 ```
 - Package Manager Example: 
 ```
@@ -48,6 +48,8 @@ Certificate = "/path/to/certificate/file"
 
 Key = "/path/to/key"
 ```
+
+
 
 >**Warning**
 >These configuration files include references to external files that won't exist on your systems by default, such as your organizations certificate and key files, which you will need to generate internally, place on the server, and then edit in the configuration files for your product. Additionally, you'll need to customize authentication parameters, and file paths across the configuration files
