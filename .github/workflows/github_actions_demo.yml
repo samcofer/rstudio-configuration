@@ -19,5 +19,5 @@ jobs:
         uses: lycheeverse/lychee-action@v1.5.4
         with:
           fail: true
-          args: --verbose --no-progress './**/*' './*'
+          args: --verbose --no-progress './workbench/*' './connect/*' './packagemanager/*' './README.md'
       - run: echo "🍏 This job's status is ${{ job.status }}."
