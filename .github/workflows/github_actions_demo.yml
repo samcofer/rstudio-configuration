@@ -15,4 +15,6 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Check links with linkcheck
+        uses: filiph/linkcheck@2.0.23
       - run: echo "🍏 This job's status is ${{ job.status }}."
