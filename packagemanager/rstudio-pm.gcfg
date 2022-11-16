@@ -34,7 +34,6 @@ DataDir = /mnt/rspm/data
 
 Certificate = "/path/to/certificate/file"
 
-
 ; Path to a private key file corresponding to the certificate specified with `HTTPS.Certificate`.
 ; Required when `HTTPS.Certificate` is specified.
 

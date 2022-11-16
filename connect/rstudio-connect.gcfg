@@ -1,6 +1,6 @@
 ;RStudio Connect Configuration File
 ;
-; Configuration Options URL: https://docs.rstudio.com/connect/admin/appendix/configuration/
+; Configuration Options URL: https://docs.posit.co/connect/admin/appendix/configuration
 
 [Server]
 
@@ -8,8 +8,9 @@
 ; to enable features like including links to your content in emails. If
 ; Connect is deployed behind an HTTP proxy, this should be the URL for Connect
 ; in terms of that proxy.
-;
-;Address = "http://rstudio-connect.example.com"
+; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
+Address = "http://rstudio-connect.example.com"
+
 DataDir = /path/to/application/storage
 
 
