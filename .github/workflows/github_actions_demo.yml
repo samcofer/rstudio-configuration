@@ -19,5 +19,5 @@ jobs:
         uses: lycheeverse/lychee-action@v1.5.4
         with:
           fail: true
-          args: --verbose --no-progress './workbench/*' './connect/*' './packagemanager/*' './README.md'
+          args: --verbose --no-progress './workbench/*' './connect/*' './packagemanager/*' './README.md' --exclude 'https://packagemanager.posit.co/cran/__linux__/centos8/latest'
       - run: echo "🍏 This job's status is ${{ job.status }}."
