@@ -52,7 +52,7 @@ Listen = ":443"
 ;session cookies and adds a Strict-Transport-Security HTTP header with a value of 30 days.
 ;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Permanent
 
-Permanent = true
+;Permanent = true
 
 [HttpRedirect]
 
