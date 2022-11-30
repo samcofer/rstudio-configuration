@@ -67,7 +67,7 @@ Certificate =  /path/to/certificate/connect.crt
 Key = /path/to/key/connect.key
 ; Force HTTPS
 ; https://docs.posit.co/connect/admin/security/#guaranteeing-https
-Permanent = True
+;Permanent = True
 MinimumTLS = 1.2
 
 ; -------------- Supported Content Types Configuration -------------- ;
