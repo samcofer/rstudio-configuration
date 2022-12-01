@@ -94,8 +94,26 @@ Provider = postgres
 BuilderDir = /tmp/git
 
 [Postgres]
-URL = postgres://username@postgres_url.com
-Password = password
+<<<<<<< Updated upstream
+;https://docs.posit.co/rspm/admin/database/#usage-data
+;https://docs.posit.co/rspm/admin/appendix/encryption/
+URL = postgres://username@postgres_url.com/db
+Password = encrypted_password
+UsageDataURL = postgres://username@postgres_url/data_usage_db
+UsageDataPassword = encrypted_password
+
+
+=======
+;https://docs.posit.co/rspm/admin/appendix/encryption/
+;https://docs.posit.co/rspm/admin/database/#usage-data
+URL = postgres://username@postgres_url.com/db
+Password = encrypted_password
+UsageDataURL = postgres://username@postgres_url.com/data_usage_db
+UsageDataPassword = encrypted_password
+
+
+
+>>>>>>> Stashed changes
 
 [Metrics]
 Enabled = true
