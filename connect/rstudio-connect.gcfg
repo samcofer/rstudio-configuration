@@ -8,9 +8,10 @@
 ; to enable features like including links to your content in emails. If
 ; Connect is deployed behind an HTTP proxy, this should be the URL for Connect
 ; in terms of that proxy.
+
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
 Address = "http://posit-connect.example.com"
-
+;https://docs.posit.co/connect/admin/directories/#variable-data
 DataDir = /path/to/application/storage
 
 
@@ -24,12 +25,36 @@ DataDir = /path/to/application/storage
 
 SenderEmail = "donotreply-connect@example.com"
 
+; The following email settings can be used to customize the look and feel of
+; email messages that Connect generates and the "EmailTo" option changes the
+; default from sending email to users to BCCing them for security in the event
+; that an email is inadvertently forwarded externally to your organization.
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#Server.EmailTo
+EmailTo = no-reply@example.org
+; https://docs.posit.co/connect/admin/appendix/branding/#custom-branding-emails
+EmailSubjectPrefix = [PositConnect]
+SenderEmailDisplayName = "Posit Connect"
+
 ; Uncomment one of the following definitions to enable email-related features.
 ;EmailProvider = "SMTP"
 ;EmailProvider = "sendmail"
 
 ;https://docs.posit.co/connect/admin/appendix/configuration/#Server.MailAll
-;MailAll = true
+;MailAll = false
+
+; ---------------- Branding Configuration  ---------------- ;
+; Branding options allow you to make Connect feel more familiar to your users
+; as well as allow you to potentially communication important information
+; about the security or environment of the platform. eg. "PROD vs DEV"
+;
+; https://docs.posit.co/connect/admin/appendix/branding/
+Enabled = true
+Logo = /path/to/logo.png
+Favicon = /path/to/favicon.ico
+DisplayName = "SuperPowers Inc."
+
+
 
 ; -------------- Viewer Permissions Request Configuration -------------- ;
 
@@ -38,11 +63,19 @@ SenderEmail = "donotreply-connect@example.com"
 ;ViewerKiosk = true
 
 ; -------------- Package Source Configuration -------------- ;
-
-[RPackageRepository "CORPORATE"]
+; This option allows you to set repositories to use your specific
+; internal version of Package Manager or use Posit Public Package
+; Manager to pull binary packages which install much more quickly
+; Note: This will override your data scientists CRAN repository,
+; but generally results in a much smoother Connect experience
+; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository
+[RPackageRepository "CRAN"]
 URL = "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
 
 ; -------------- SMTP Email Configuration -------------- ;
+; Email configuration options for SMTP, which is the most common
+; email provider for most organizations
+; https://docs.posit.co/connect/admin/email/#configuring-an-email-provider
 [SMTP]
 Host = "smtp.example.com"
 Port = 25
@@ -53,11 +86,20 @@ StartTLS = "detect"
 ;Password = "secret"
 
 ; -------------- WebServer Configuration -------------- ;
+
+; Set the arguments to enable Connect to listen on an unsecured port
+; like 3939, which is the default Connect port, or port 80 if you need to
+; run without https and allow users to directly connect. NoWarning removes the
+; user facing warning when your organization needs Connect to run insecurely.
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTP
+
 ;[HTTP]
 ;Listen = :3939
 ;NoWarning = true
 
 [HTTPS]
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS
 ; RStudio Connect will listen on this network address for HTTPS connections.
 Listen = :443
 ;Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate authority,
@@ -72,11 +114,15 @@ MinimumTLS = 1.2
 
 ; -------------- Supported Content Types Configuration -------------- ;
 
+; When determining the list of R/Python versions to be referenced/installed on your
+; Connect instance, make sure to consult with your data science team and determine
+; what version(s) they use and also what version(s) of R/Python are installed on your
+; Workbench server if applicable.
+
 ;https://docs.posit.co/connect/admin/r/#r-versions
 [R]
-Executable = /shared/R/3.3.1/bin/R
-Executable = /shared/R/3.2.4/bin/R
-Executable = /shared/R/3.1.3/bin/R
+Executable = /opt/R/4.2.2/bin/R
+Executable = /opt/R/3.6.3/bin/R
 
 ;https://docs.posit.co/connect/admin/python/
 ;Python package source configuration via pip.conf
@@ -94,9 +140,17 @@ Executable = "/opt/quarto/v1.1.251/bin/quarto"
 
 ; -------------- Logging Configuration -------------- ;
 
+; Access and Service logs enable you to gain a better understanding
+; of the function of Connect and the format options are detailed on the page
+; linked below. This configuration uses JSON, as it's more accessible to
+; programmatic log ingestion and is still human readable.
+; https://docs.posit.co/connect/admin/logging/#logging
 [Logging]
 AccessLogFormat = JSON
 ServiceLogFormat = JSON
+
+; All Connect logs rotate using logrotate and do so on the schedule at the link below:
+; https://docs.posit.co/connect/admin/logging/#logrotate
 
 ; -------------- Permissions/Authorization Configuration -------------- ;
 
@@ -104,23 +158,52 @@ ServiceLogFormat = JSON
 
 ;[Authorization]
 
+; This setting prevents users from seeing other Connect users
+; https://docs.posit.co/connect/admin/appendix/branding/#viewer-authorization-restrictions
+ViewersCanOnlySeeThemselves = true
+
+;https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.UserRoleMapping
+; Detailed configuration example for AD/LDAP:
+; https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/#using-user-profile-roles
 ;UserRoleMapping = true
+
+; These settings enable automatically mapping incoming users to Connect roles based on their
+; group membership.
+; See here for LDAP: https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/#using-group-memberships
+; See here for SAML: https://docs.posit.co/connect/admin/authentication/saml-based/saml/#using-group-memberships
+; See here for OIDC: https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
+;UserRoleGroupMapping = true
 ;ViewerRoleMapping = "The values or DN that should map to the viewer role."
 ;PublisherRoleMapping = "The values or DN that should map to the publisher role."
 ;AdministratorRoleMapping = "The values or DN that should map to the administrator role."
 
-; --------------Active Directory Authentication-------------- ;
-
-; https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/
+; --------------Server Authentication Options-------------- ;
+; This Authentication Controls at a high level the behaviors of Connect
+; when it authenticates users to either individual content items or the main
+; dashboard.
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication
 
 [Authentication]
 Provider = ldap
+; Provider = saml
 Lifetime = 12h
 Inactivity = 8h
 APIKeyAuth = true
 ;Enable Captcha
 ;https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
 ;ChallengeResponseEnabled = true
+
+
+; This configuration file includes EXAMPLE configurations for authenticating
+; using the following models:
+; 1. Active Directory with Service Credentials
+; 2. LDAP Configuration With Service Credentials
+; 3. SAML IDP
+
+; --------------Active Directory Authentication-------------- ;
+
+; https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/
+
 
 [LDAP "Active Directory with Service Credentials"]
 
@@ -173,16 +256,7 @@ GroupNameAttribute = "sAMAccountName"
 
 ; https://docs.posit.co/connect/admin/authentication/ldap-based/ldap-double-bind/
 
-[Authentication]
-Provider = ldap
-Lifetime = 12h
-Inactivity = 8h
-APIKeyAuth = true
-;Enable Captcha
-;https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
-;ChallengeResponseEnabled = true
-
-[LDAP "Sample LDAP Configuration With Service Credentials"]
+[LDAP "LDAP Configuration With Service Credentials"]
 
 ; For legacy SSL (ldaps) use these:
 ServerAddress = ldaps.company.com:636
@@ -240,15 +314,6 @@ GroupNameAttribute = "cn"
 
 ;https://docs.posit.co/connect/admin/authentication/saml-based/saml/
 
-[Authentication]
-
-;Specifies the type of user authentication. Allowed values are password, ldap, pam, oauth2, proxy or saml
-
-Provider = saml
-Lifetime = 12h
-Inactivity = 8h
-APIKeyAuth = true
-
 [SAML]
 
 IdPMetaDataPath = /path/to/IDPmetadata/IDP.xml
@@ -263,6 +328,6 @@ EmailAttribute = Email
 GroupsAttribute = Groups
 GroupsAutoProvision = true
 
-; When attempting to troubleshoot a problem relating to LDAP,
+; When attempting to troubleshoot a problem relating to SAML,
 ; you can enable more verbose logging by enabling the following line
 ;Logging = true
