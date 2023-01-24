@@ -86,6 +86,8 @@ Distributions = "all"
 [Authentication]
 APITokenAuth = true
 
+;[Manifest]
+;URL = file:///opt/efs/
 
 [Database]
 Provider = postgres
