@@ -31,10 +31,10 @@ SenderEmail = "donotreply-connect@example.com"
 ; that an email is inadvertently forwarded externally to your organization.
 
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.EmailTo
-EmailTo = no-reply@example.org
+;EmailTo = no-reply@example.org
 ; https://docs.posit.co/connect/admin/appendix/branding/#custom-branding-emails
-EmailSubjectPrefix = [PositConnect]
-SenderEmailDisplayName = "Posit Connect"
+;EmailSubjectPrefix = [PositConnect]
+;SenderEmailDisplayName = "Posit Connect"
 
 ; Uncomment one of the following definitions to enable email-related features.
 ;EmailProvider = "SMTP"
@@ -49,6 +49,7 @@ SenderEmailDisplayName = "Posit Connect"
 ; about the security or environment of the platform. eg. "PROD vs DEV"
 ;
 ; https://docs.posit.co/connect/admin/appendix/branding/
+[Branding]
 Enabled = true
 Logo = /path/to/logo.png
 Favicon = /path/to/favicon.ico
@@ -69,6 +70,7 @@ DisplayName = "SuperPowers Inc."
 ; Note: This will override your data scientists CRAN repository,
 ; but generally results in a much smoother Connect experience
 ; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository
+
 [RPackageRepository "CRAN"]
 URL = "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
 
@@ -135,7 +137,7 @@ Executable = /opt/python/3.7.7/bin/python
 ;https://docs.posit.co/connect/admin/quarto/
 [Quarto]
 Enabled = true
-Executable = "/opt/quarto/v1.2.253/bin/quarto"
+Executable = "/opt/quarto/1.2.313/bin/quarto"
 Executable = "/opt/quarto/v1.1.251/bin/quarto"
 
 ; -------------- Logging Configuration -------------- ;
@@ -159,7 +161,9 @@ ServiceLogFormat = JSON
 ;[Authorization]
 
 ; This setting prevents users from seeing other Connect users
+;
 ; https://docs.posit.co/connect/admin/appendix/branding/#viewer-authorization-restrictions
+
 ViewersCanOnlySeeThemselves = true
 
 ;https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.UserRoleMapping
