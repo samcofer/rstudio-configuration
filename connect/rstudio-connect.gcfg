@@ -103,14 +103,20 @@ StartTLS = "detect"
 [HTTPS]
 ; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS
 ; RStudio Connect will listen on this network address for HTTPS connections.
+
 Listen = :443
+
 ;Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate authority,
 ;the certificate file should be the concatenation of the server's certificate followed by the CA's certificate
+
 Certificate =  /path/to/certificate/connect.crt
+
 ;Path to a PEM encoded private key file corresponding to the certificate specified with
+
 Key = /path/to/key/connect.key
 ; Force HTTPS
 ; https://docs.posit.co/connect/admin/security/#guaranteeing-https
+
 Permanent = True
 MinimumTLS = 1.2
 
