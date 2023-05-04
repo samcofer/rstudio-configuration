@@ -54,6 +54,9 @@ Listen = ":443"
 
 Permanent = true
 
+MinimumTLS = 1.2
+
+
 [HttpRedirect]
 
 Listen = ":80"

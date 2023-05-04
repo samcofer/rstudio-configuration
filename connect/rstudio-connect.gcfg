@@ -49,10 +49,10 @@ SenderEmailDisplayName = "Posit Connect"
 ; about the security or environment of the platform. eg. "PROD vs DEV"
 ;
 ; https://docs.posit.co/connect/admin/appendix/branding/
-Enabled = true
-Logo = /path/to/logo.png
-Favicon = /path/to/favicon.ico
-DisplayName = "SuperPowers Inc."
+;Enabled = true
+;Logo = /path/to/logo.png
+;Favicon = /path/to/favicon.ico
+;DisplayName = "SuperPowers Inc."
 
 
 
@@ -109,8 +109,10 @@ Certificate =  /path/to/certificate/connect.crt
 Key = /path/to/key/connect.key
 ; Force HTTPS
 ; https://docs.posit.co/connect/admin/security/#guaranteeing-https
-Permanent = True
+
 MinimumTLS = 1.2
+
+;Permanent = True
 
 ; -------------- Supported Content Types Configuration -------------- ;
 
