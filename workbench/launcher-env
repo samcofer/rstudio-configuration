@@ -1,16 +1,14 @@
 #Launcher Environment Configuration
 #https://docs.posit.co/ide/server-pro/job_launcher/configuration.html#launcher-environment
 
-#JobType: session
-#Environment: IS_LAUNCHER_SESSION=1
-# IS_ADHOC_JOB=0
-# USER_HOME=/home/{USER}
+JobType: any
+Workbench: any
 
-#JobType: adhoc
-#Environment: IS_LAUNCHER_SESSION=0
-# IS_ADHOC_JOB=1
-# USER_HOME=/home/{USER}
+# RHEL Environment setting to make Python use the system certificate store
+# {{ REPLACEME }}
+#Environment: REQUESTS_CA_BUNDLE=/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
-#JobType: any
-#Cluster: Kubernetes
-#ENVIRONMENT: IS_KUBERNETES=1
+
+# Ubuntu/Deb Environment setting to make Python use the system certificate store
+# {{ REPLACEME }}
+#Environment: REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt

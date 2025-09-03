@@ -10,9 +10,8 @@
 ; in terms of that proxy.
 
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
-Address = "http://posit-connect.example.com"
-;https://docs.posit.co/connect/admin/directories/#variable-data
-DataDir = /path/to/application/storage
+Address = {{ REPLACEME }}
+
 
 
 ; -------------- Server Email Configuration -------------- ;
@@ -23,7 +22,7 @@ DataDir = /path/to/application/storage
 ; email. The system will not be able to send administrative email until this
 ; setting is configured.
 
-SenderEmail = "donotreply-connect@example.com"
+SenderEmail = {{ REPLACEME }}
 
 ; The following email settings can be used to customize the look and feel of
 ; email messages that Connect generates and the "EmailTo" option changes the
@@ -36,24 +35,12 @@ SenderEmail = "donotreply-connect@example.com"
 ;EmailSubjectPrefix = [PositConnect]
 ;SenderEmailDisplayName = "Posit Connect"
 
-; Uncomment one of the following definitions to enable email-related features.
+; Uncomment one of the following definitions to enable email-related features. {{ REPLACEME }}
 ;EmailProvider = "SMTP"
 ;EmailProvider = "sendmail"
 
 ;https://docs.posit.co/connect/admin/appendix/configuration/#Server.MailAll
 ;MailAll = false
-
-; ---------------- Branding Configuration  ---------------- ;
-; Branding options allow you to make Connect feel more familiar to your users
-; as well as allow you to potentially communication important information
-; about the security or environment of the platform. eg. "PROD vs DEV"
-;
-; https://docs.posit.co/connect/admin/appendix/branding/
-[Branding]
-Enabled = true
-Logo = /path/to/logo.png
-Favicon = /path/to/favicon.ico
-DisplayName = "SuperPowers Inc."
 
 
 
@@ -72,33 +59,22 @@ DisplayName = "SuperPowers Inc."
 ; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository
 
 [RPackageRepository "CRAN"]
-URL = "https://packagemanager.posit.co/cran/__linux__/centos8/latest"
+URL = "{{ REPLACEME }}"
 
 ; -------------- SMTP Email Configuration -------------- ;
 ; Email configuration options for SMTP, which is the most common
 ; email provider for most organizations
 ; https://docs.posit.co/connect/admin/email/#configuring-an-email-provider
 [SMTP]
-Host = "smtp.example.com"
+Host = "{{ REPLACEME }}"
 Port = 25
 SSL = false
 StartTLS = "detect"
 
-;User = "no-reply@example.com"
-;Password = "secret"
+;User = "{{ REPLACEME }}"
+;Password = "{{ REPLACEME }}"
 
 ; -------------- WebServer Configuration -------------- ;
-
-; Set the arguments to enable Connect to listen on an unsecured port
-; like 3939, which is the default Connect port, or port 80 if you need to
-; run without https and allow users to directly connect. NoWarning removes the
-; user facing warning when your organization needs Connect to run insecurely.
-;
-; https://docs.posit.co/connect/admin/appendix/configuration/#HTTP
-
-;[HTTP]
-;Listen = :3939
-;NoWarning = true
 
 [HTTPS]
 ; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS
@@ -109,15 +85,15 @@ Listen = :443
 ;Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate authority,
 ;the certificate file should be the concatenation of the server's certificate followed by the CA's certificate
 
-Certificate =  /path/to/certificate/connect.crt
+Certificate =  {{ REPLACEME }}
 
 ;Path to a PEM encoded private key file corresponding to the certificate specified with
 
-Key = /path/to/key/connect.key
+Key = {{ REPLACEME }}
 ; Force HTTPS
 ; https://docs.posit.co/connect/admin/security/#guaranteeing-https
 
-;Permanent = True
+Permanent = True
 MinimumTLS = 1.2
 
 ; -------------- Supported Content Types Configuration -------------- ;
@@ -129,22 +105,22 @@ MinimumTLS = 1.2
 
 ;https://docs.posit.co/connect/admin/r/#r-versions
 [R]
-Executable = /opt/R/4.2.2/bin/R
-Executable = /opt/R/3.6.3/bin/R
+Executable = {{ REPLACEME }}
+Executable = {{ REPLACEME }}
 
 ;https://docs.posit.co/connect/admin/python/
 ;Python package source configuration via pip.conf
 ;https://docs.posit.co/connect/admin/python/package-management/#configuring-pip
 [Python]
 Enabled = true
-Executable = /opt/python/3.10.7/bin/python
-Executable = /opt/python/3.7.7/bin/python
+Executable = {{ REPLACEME }}
+Executable = {{ REPLACEME }}
 
 ;https://docs.posit.co/connect/admin/quarto/
 [Quarto]
 Enabled = true
-Executable = "/opt/quarto/1.2.313/bin/quarto"
-Executable = "/opt/quarto/v1.1.251/bin/quarto"
+Executable = {{ REPLACEME }}
+Executable = {{ REPLACEME }}
 
 ; -------------- Logging Configuration -------------- ;
 
@@ -172,20 +148,15 @@ ServiceLogFormat = JSON
 
 ViewersCanOnlySeeThemselves = true
 
-;https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.UserRoleMapping
-; Detailed configuration example for AD/LDAP:
-; https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/#using-user-profile-roles
-;UserRoleMapping = true
 
 ; These settings enable automatically mapping incoming users to Connect roles based on their
 ; group membership.
-; See here for LDAP: https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/#using-group-memberships
 ; See here for SAML: https://docs.posit.co/connect/admin/authentication/saml-based/saml/#using-group-memberships
 ; See here for OIDC: https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
 ;UserRoleGroupMapping = true
-;ViewerRoleMapping = "The values or DN that should map to the viewer role."
-;PublisherRoleMapping = "The values or DN that should map to the publisher role."
-;AdministratorRoleMapping = "The values or DN that should map to the administrator role."
+;ViewerRoleMapping = "The values or DN that should map to the viewer role." {{ REPLACEME }}
+;PublisherRoleMapping = "The values or DN that should map to the publisher role." {{ REPLACEME }}
+;AdministratorRoleMapping = "The values or DN that should map to the administrator role." {{ REPLACEME }}
 
 ; --------------Server Authentication Options-------------- ;
 ; This Authentication Controls at a high level the behaviors of Connect
@@ -194,131 +165,14 @@ ViewersCanOnlySeeThemselves = true
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication
 
 [Authentication]
-Provider = ldap
-; Provider = saml
+
+; One of these options should be defined
+;Provider = saml
+;Provider = oauth2
+
 Lifetime = 12h
 Inactivity = 8h
 APIKeyAuth = true
-;Enable Captcha
-;https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.ChallengeResponseEnabled
-;ChallengeResponseEnabled = true
-
-
-; This configuration file includes EXAMPLE configurations for authenticating
-; using the following models:
-; 1. Active Directory with Service Credentials
-; 2. LDAP Configuration With Service Credentials
-; 3. SAML IDP
-
-; --------------Active Directory Authentication-------------- ;
-
-; https://docs.posit.co/connect/admin/authentication/ldap-based/active-directory-double-bind/
-
-
-[LDAP "Active Directory with Service Credentials"]
-
-; For legacy SSL (ldaps) use these:
-ServerAddress = ldaps.company.com:636
-TLS = true
-; Or for TLS (StartTLS extension) use these:
-; ServerAddress = ldap.company.com:389
-; StartTLS = true
-
-TLSCACertificate= /etc/ssl/cert/ca.pem
-; For TLS/SSL testing purposes only:
-; ServerTLSInsecure = true
-
-; Service credentials (recommended):
-BindDN = "EXAMPLE\\admin"
-BindPassword = "XXXXXXXX"
-; Or anonymous bind (less secure):
-; AnonymousBind = true
-
-; Users
-UserSearchBaseDN = "OU=Users,DC=example,DC=com"
-UserObjectClass = "user"
-UniqueIdAttribute = "objectGUID"
-UsernameAttribute = "sAMAccountName"
-UserEmailAttribute = "mail"
-UserFirstNameAttribute = "givenName"
-UserLastNameAttribute = "sn"
-
-; Groups
-GroupSearchBaseDN = "OU=Users,DC=example,DC=com"
-GroupObjectClass = "group"
-GroupUniqueIdAttribute = "objectGUID"
-GroupNameAttribute = "sAMAccountName"
-; Enable this for a better user experience, unless
-; managing a large number of groups is a concern:
-;GroupsAutoProvision = true
-
-; Use this argument to restrict login to particular groups
-; There can be multiple entries for permitted login information
-;PermittedLoginGroup = cn=admins,ou=group,dc=company,dc=com
-;PermittedLoginGroup = cn=scientists,ou=group,dc=company,dc=com
-
-
-; When attempting to troubleshoot a problem relating to LDAP,
-; you can enable more verbose logging by enabling the following line
-;Logging = true
-
-; -------------- LDAP Authentication-------------- ;
-
-; https://docs.posit.co/connect/admin/authentication/ldap-based/ldap-double-bind/
-
-[LDAP "LDAP Configuration With Service Credentials"]
-
-; For legacy SSL (ldaps) use these:
-ServerAddress = ldaps.company.com:636
-TLS = true
-
-; Or for TLS (StartTLS extension) use these:
-; ServerAddress = ldap.company.com:389
-; StartTLS = true
-
-TLSCACertificate= /etc/ssl/cert/ca.pem
-
-; For TLS/SSL testing purposes only:
-; ServerTLSInsecure = true
-
-; Service credentials (recommended):
-BindDN = "uid=admin,OU=users,DC=example,DC=com"
-BindPassword = "XXXXXXXX"
-
-; Or anonymous bind (less secure):
-; AnonymousBind = true
-
-; Users (OpenLDAP example)
-UserSearchBaseDN = "OU=Users,DC=example,DC=com"
-UserObjectClass = "posixAccount"
-; UniqueIdAttribute - vendor-specific object attribute
-; Please refer to your LDAP vendor documentation for the correct value.
-; (OpenLDAP) UniqueIdAttribute = "entryUUID"
-; (Oracle OID) UniqueIdAttribute = "orclGuid"
-; (IBM RACF) UniqueIdAttribute = "ibm-entryUUID"
-; (Novell eDirectory) UniqueIdAttribute = "GUID"
-; (389 Directory Server) UniqueIdAttribute = "nsUniqueID"
-UniqueIdAttribute = "entryUUID"
-UsernameAttribute = "uid"
-UserEmailAttribute = "mail"
-UserFirstNameAttribute = "givenName"
-UserLastNameAttribute = "sn"
-
-; Groups (OpenLDAP example)
-GroupSearchBaseDN = "OU=Users,DC=example,DC=com"
-GroupObjectClass = "posixGroup"
-
-; GroupUniqueIdAttribute - vendor-specific object attribute, same as the user one
-GroupUniqueIdAttribute = "entryUUID"
-GroupNameAttribute = "cn"
-
-; Enable this for a better user experience, unless
-; managing a large number of groups is a concern:
-;GroupsAutoProvision = true
-
-; When attempting to troubleshoot a problem relating to LDAP,
-; you can enable more verbose logging by enabling the following line
-;Logging = true
 
 ; -------------- SAML Authentication-------------- ;
 
@@ -326,7 +180,9 @@ GroupNameAttribute = "cn"
 
 [SAML]
 
-IdPMetaDataPath = /path/to/IDPmetadata/IDP.xml
+; One of these options should be defined
+; IdPMetaDataURL = {{ REPLACEME }}
+; IdPMetaDataPath = {{ REPLACEME }}
 
 IdPSingleSignOnPostBinding = true
 UniqueIDAttribute = NameID
@@ -340,4 +196,16 @@ GroupsAutoProvision = true
 
 ; When attempting to troubleshoot a problem relating to SAML,
 ; you can enable more verbose logging by enabling the following line
+;Logging = true
+
+[OAuth2]
+
+ClientId = "{{ REPLACEME }}"
+ClientSecret = "{{ REPLACEME }}"
+OpenIDConnectIssuer = "{{ REPLACEME }}"
+RequireUsernameClaim = true
+GroupsAutoProvision = true
+
+; When troubleshooting an OpenID Connect problem, more verbose
+; logging is produced by uncommenting the following line:
 ;Logging = true

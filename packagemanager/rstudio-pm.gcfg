@@ -7,25 +7,7 @@
 ; `/rspm` to facilitate generating URLs for the `rspm url create` command, Swagger docs,
 ; and PyPI simple index pages.
 
-Address = https://packagemanager.posit.co/
-
-
-
-; Git sources require a configured R installation. R is often installed at `/usr/lib/R`
-; or `/usr/lib64/R`.
-
-RVersion = /opt/R/#.#.#
-
-
-; Customize the data directory if necessary. This is where all packages and metadata are
-; stored by default. Refer to Admin Guide for details.
-;https://docs.posit.co/rspm/admin/appendix/configuration/#Server.DataDir
-
-DataDir = /mnt/rspm/data
-
-;[HTTP]
-; RStudio Package Manager will listen on this network address for HTTP connections.
-;Listen =
+Address = {{ REPLACEME }}
 
 [HTTPS]
 ; Path to a TLS certificate file. If the certificate is signed by a certificate authority, the
@@ -33,12 +15,12 @@ DataDir = /mnt/rspm/data
 ; certificate. Must be paired with `HTTPS.Key`.
 ;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Settings
 
-Certificate = "/path/to/certificate/file"
+Certificate = {{ REPLACEME }}
 
 ; Path to a private key file corresponding to the certificate specified with `HTTPS.Certificate`.
 ; Required when `HTTPS.Certificate` is specified.
 
-Key = "/path/to/key"
+Key = {{ REPLACEME }}
 
 ;RStudio Package Manager will listen on this network address for HTTPS connections.
 ;The network address can be of the form :443 or 192.168.0.1:443.
@@ -52,72 +34,8 @@ Listen = ":443"
 ;session cookies and adds a Strict-Transport-Security HTTP header with a value of 30 days.
 ;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Permanent
 
-;Permanent = true
+Permanent = true
 
 [HttpRedirect]
 
 Listen = ":80"
-
-[CRAN]
-; Customize the default schedule for CRAN sync.
-;SyncSchedule = "0 0 * * *"
-
-[Bioconductor]
-; Customize the default schedule for Bioconductor syncs.
-;SyncSchedule = "0 2 * * *"
-
-[PyPI]
-; Customize the default schedule for PyPI syncs.
-;SyncSchedule = "0 1 * * *"
-
-; Configure Git if you are intending to build and share packages stored in Git repositories.
-;https://docs.posit.co/rspm/admin/appendix/configuration/#git
-[Git]
-; The amount of time to wait between polling git repos to look for package changes.
-;PollInterval = 5m
-;
-; The maximum number of times to attempt building a git package when the build fails.
-;BuildRetries = 3
-
-;https://docs.posit.co/rspm/admin/appendix/configuration/#binaries
-[Binaries]
-Distributions = "all"
-
-[Authentication]
-APITokenAuth = true
-
-;[Manifest]
-;URL = file:///opt/efs/
-
-[Database]
-Provider = postgres
-
-[Git]
-BuilderDir = /tmp/git
-
-[Postgres]
-<<<<<<< Updated upstream
-;https://docs.posit.co/rspm/admin/database/#usage-data
-;https://docs.posit.co/rspm/admin/appendix/encryption/
-URL = postgres://username@postgres_url.com/db
-Password = encrypted_password
-UsageDataURL = postgres://username@postgres_url/data_usage_db
-UsageDataPassword = encrypted_password
-
-
-=======
-;https://docs.posit.co/rspm/admin/appendix/encryption/
-;https://docs.posit.co/rspm/admin/database/#usage-data
-URL = postgres://username@postgres_url.com/db
-Password = encrypted_password
-UsageDataURL = postgres://username@postgres_url.com/data_usage_db
-UsageDataPassword = encrypted_password
-
-
-
->>>>>>> Stashed changes
-
-[Metrics]
-Enabled = true
-
-
