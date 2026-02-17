@@ -1,0 +1,9 @@
+{
+  "_comment": "Positron Enforced Settings - /etc/rstudio/positron-enforced-settings.json",
+  "_documentation": "https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html#enforced-settings",
+  "_note": "These settings are ENFORCED and users CANNOT override them. Register this file in /etc/rstudio/profiles using 'positron-enforced-settings = /etc/rstudio/positron-enforced-settings.json' under the [*] section. Restart Workbench after changes: sudo rstudio-server restart",
+
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "telemetry.telemetryLevel": "off"
+}

@@ -1,41 +1,132 @@
-; RStudio Package Manager configuration file
+; Posit Package Manager Configuration File
+;
+; Full Configuration Reference: https://docs.posit.co/rspm/admin/appendix/configuration
+
+; -------------- Server Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/appendix/configuration.html#Server.Settings
+; Core server settings including the public URL, data directories, and logging options.
+; Server.Address is required if Package Manager is served from a subdirectory, uses
+; OpenID Connect authentication, or needs correct URLs for PyPI index pages and API docs.
 
 [Server]
-; Address is a public URL for this RStudio Package Manager server. If Package Manager
-; is deployed behind an HTTP proxy, this should be the URL for Package Manager in
-; terms of that proxy. It must be configured if RSPM is served from a subdirectory like
-; `/rspm` to facilitate generating URLs for the `rspm url create` command, Swagger docs,
-; and PyPI simple index pages.
 
+; Public URL for this Posit Package Manager server. If Package Manager is deployed
+; behind an HTTP proxy, this should be the URL in terms of that proxy. Required if
+; served from a subdirectory (e.g., /rspm) to facilitate generating URLs for rspm CLI,
+; Swagger docs, and PyPI simple index pages.
+; https://docs.posit.co/rspm/admin/appendix/configuration.html#Server.Settings
 Address = {{ REPLACEME }}
 
-[HTTPS]
-; Path to a TLS certificate file. If the certificate is signed by a certificate authority, the
-; certificate file should be the concatenation of the server's certificate followed by the CA's
-; certificate. Must be paired with `HTTPS.Key`.
-;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Settings
+; DataDir is the directory where Package Manager stores variable data (SQLite DB, cache,
+; packages, etc.). Change this if you want data on another volume (e.g. larger disk, NFS).
+; Default: /var/lib/rstudio-pm
+;DataDir = /var/lib/rstudio-pm
 
+; TempDir for temporary files; must not be a subdirectory of DataDir.
+; If unset, uses $TMPDIR or /tmp
+;TempDir = /tmp
+
+; R and Python paths (if you don't want Package Manager to auto-detect them)
+;RVersion = /opt/R/4.4.1/bin/R
+;PythonVersion = /usr/bin/python3
+
+; -------------- Logging Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/logging.html
+; Access logs track HTTP requests; Service logs track package serving activity.
+; Default access log: /var/log/rstudio/rstudio-pm/rstudio-pm.access.log (combined format).
+
+; Optional service log for package downloads (source/binary)
+;ServiceLog = /var/log/rstudio/rstudio-pm/rstudio-pm.service.log
+
+; Access log path and format (default: combined format to rstudio-pm.access.log)
+;AccessLog = /var/log/rstudio/rstudio-pm/rstudio-pm.access.log
+;AccessLogFormat = combined
+
+; -------------- HTTPS / TLS Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/appendix/configuration.html#https
+; HTTPS configuration including certificates, network binding, and secure cookie settings.
+; Permanent=true enables HSTS (HTTP Strict Transport Security) and sets secure flag on
+; cookies, forcing browsers to always use HTTPS.
+
+[HTTPS]
+
+; Path to a TLS certificate file. If the certificate is signed by a certificate authority,
+; the certificate file should be the concatenation of the server's certificate followed
+; by the CA's certificate. Must be paired with HTTPS.Key.
+; https://docs.posit.co/rspm/admin/networking.html#configuring-ssl-certificates
 Certificate = {{ REPLACEME }}
 
-; Path to a private key file corresponding to the certificate specified with `HTTPS.Certificate`.
-; Required when `HTTPS.Certificate` is specified.
-
+; Path to a private key file corresponding to the certificate specified with HTTPS.Certificate
+; Required when HTTPS.Certificate is specified
 Key = {{ REPLACEME }}
 
-;RStudio Package Manager will listen on this network address for HTTPS connections.
-;The network address can be of the form :443 or 192.168.0.1:443.
-;Either HTTP.Listen or HTTPS.Listen is required.
-
+; Posit Package Manager will listen on this network address for HTTPS connections.
+; The network address can be of the form :443 or 192.168.0.1:443.
+; Either HTTP.Listen or HTTPS.Listen is required.
 Listen = ":443"
 
-;Advertises to all visitors that this server should only ever be hosted securely via HTTPS.
-;WARNING: if this is set to true -- even temporarily -- visitors may be permanently denied
-;access to your server over an unsecured (non-HTTPS) protocol. This sets the secure flag on all
-;session cookies and adds a Strict-Transport-Security HTTP header with a value of 30 days.
-;https://docs.posit.co/rspm/admin/appendix/configuration/#HTTPS.Permanent
-
+; Permanent advertises to all visitors that this server should only ever be hosted
+; securely via HTTPS. WARNING: if this is set to true -- even temporarily -- visitors
+; may be permanently denied access to your server over an unsecured (non-HTTPS) protocol.
+; This sets the secure flag on all session cookies and adds a Strict-Transport-Security
+; HTTP header with a value of 30 days.
+; https://docs.posit.co/rspm/admin/security/server.html#security
 Permanent = true
 
-[HttpRedirect]
+; MinimumTLS restricts to TLS 1.2 and above for security hardening
+MinimumTLS = 1.2
 
+; -------------- HTTP Redirect Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/networking.html#configuring-ssl-certificates
+; Automatically redirects HTTP traffic to HTTPS when HTTPS.Permanent is enabled above.
+
+[HttpRedirect]
 Listen = ":80"
+
+; -------------- Database Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/database.html
+; Package Manager can use SQLite (default) or PostgreSQL. PostgreSQL is recommended
+; for production and high-availability deployments.
+
+; SQLite (default) - suitable for single-server deployments
+[SQLite]
+;Dir = /var/lib/rstudio-pm
+
+; PostgreSQL - recommended for HA and production deployments
+; Uncomment and configure for PostgreSQL
+;[Postgres]
+;URL = "postgres://username:password@hostname:5432/database_name?sslmode=require"
+
+; -------------- Proxy Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/proxy.html
+; Configure outbound proxy for accessing external repositories (CRAN, PyPI, etc.).
+; Required if Package Manager cannot directly access the internet.
+
+[Proxy]
+;URL = http://proxy.company.com:3128
+;User = {{ REPLACEME }}
+;Password = {{ REPLACEME }}
+
+; -------------- Git Sources Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/package-sources.html
+; Git integration for package sources. Configure Git credentials and build settings.
+
+[Git]
+; Poll interval for checking Git repositories for updates
+;PollInterval = 5m
+
+; -------------- Air-Gapped / Offline Configuration -------------- ;
+;
+; https://docs.posit.co/rspm/admin/appendix/airgapped-installs.html#configuring-package-manager
+; Configuration for air-gapped deployments where Package Manager cannot access external
+; repositories. Requires offline data files to be downloaded separately.
+
+[Manifest]
+;URL = file:///path/to/offline/data
