@@ -1,0 +1,33 @@
+# Posit Workbench Profiles Configuration File
+#
+# Full Configuration Reference: https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html#enforced-settings
+
+#-----------------------------------------------------------------------------------------#
+# Global Positron Enforced Settings
+#
+# https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html#enforced-settings
+# Register the positron-enforced-settings.json file to apply enforced settings that users
+# cannot override. The [*] section applies to all users. You can also create per-group
+# sections [@groupname] or per-user sections [username] with different enforced settings.
+# After modifying this file, restart Workbench: sudo rstudio-server restart
+#-----------------------------------------------------------------------------------------#
+[*]
+positron-enforced-settings = /etc/rstudio/positron-enforced-settings.json
+
+#-----------------------------------------------------------------------------------------#
+# Group-Based Enforced Settings (Example)
+#
+# https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html#enforced-settings
+# You can create different enforced settings for specific Unix groups.
+#-----------------------------------------------------------------------------------------#
+;[@data-science]
+;positron-enforced-settings = /etc/rstudio/data-science-enforced-settings.json
+
+#-----------------------------------------------------------------------------------------#
+# User-Based Enforced Settings (Example)
+#
+# https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html#enforced-settings
+# You can create different enforced settings for specific users.
+#-----------------------------------------------------------------------------------------#
+;[jsmith]
+;positron-enforced-settings = /etc/rstudio/jsmith-enforced-settings.json
