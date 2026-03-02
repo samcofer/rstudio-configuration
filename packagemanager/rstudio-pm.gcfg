@@ -1,6 +1,6 @@
 ; Posit Package Manager Configuration File
 ;
-; Full Configuration Reference: https://docs.posit.co/rspm/admin/appendix/configuration
+; Full Configuration Reference: https://docs.posit.co/rspm/admin/appendix/configuration.html
 
 ; -------------- Server Configuration -------------- ;
 ;
@@ -115,7 +115,7 @@ Listen = ":80"
 
 ; -------------- Git Sources Configuration -------------- ;
 ;
-; https://docs.posit.co/rspm/admin/package-sources.html
+; https://docs.posit.co/rspm/admin/repositories.html#sources
 ; Git integration for package sources. Configure Git credentials and build settings.
 
 [Git]

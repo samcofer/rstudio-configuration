@@ -16,5 +16,14 @@ jobs:
         uses: lycheeverse/lychee-action@v1.5.4
         with:
           fail: true
-          args: --verbose --no-progress './workbench/*' './connect/*' './packagemanager/*' './README.md' --exclude 'https://packagemanager.posit.co/cran/__linux__/centos8/latest' --exclude 'file:///opt/efs/'
+          args: >-
+            --verbose --no-progress
+            './workbench/*' './connect/*' './packagemanager/*' './README.md'
+            --exclude 'https://packagemanager.posit.co/cran/__linux__/centos8/latest'
+            --exclude 'file:///opt/efs/'
+            --exclude 'file:///path/to/'
+            --exclude '\.company\.com'
+            --exclude 'user@company\.com'
+            --exclude 'https://packagemanager.posit.co/cran/__linux__/$'
+            --exclude 'https://packagemanager.posit.co/bioconductor/__linux__/$'
       - run: echo "🍏 This job's status is ${{ job.status }}."
