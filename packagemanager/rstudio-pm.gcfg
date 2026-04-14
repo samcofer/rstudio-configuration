@@ -18,8 +18,6 @@
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Server.Settings
 Address = "PM-URL-HERE"  ; TODO: Replace this with your PM Server URL that your users will use in their browser.
 
-;---------------------ENHANCED----------------------;
-
 ; DataDir is the directory where Package Manager stores variable data (SQLite DB, cache,
 ; packages, etc.). Change this if you want data on another volume (e.g. larger disk, NFS).
 ; Default: /var/lib/rstudio-pm
@@ -28,8 +26,6 @@ Address = "PM-URL-HERE"  ; TODO: Replace this with your PM Server URL that your 
 ; TempDir for temporary files; must not be a subdirectory of DataDir.
 ; If unset, uses $TMPDIR or /tmp
 ;TempDir = /tmp
-
-;------------------END - ENHANCED-------------------;
 
 ; -------------- Logging Configuration -------------- ;
 ;
@@ -44,10 +40,12 @@ Address = "PM-URL-HERE"  ; TODO: Replace this with your PM Server URL that your 
 ;AccessLog = /var/log/rstudio/rstudio-pm/rstudio-pm.access.log
 ;AccessLogFormat = combined
 
-; -------------- HTTPS / TLS Configuration -------------- ;
+; -------------- HTTP Configuration -------------- ;
 
 [HTTP]
 Listen = :4242
+
+; -------------- HTTPS / TLS Configuration -------------- ;
 
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#https
 ; HTTPS configuration including certificates, network binding, and secure cookie settings.
@@ -93,13 +91,15 @@ Listen = :4242
 
 ; -------------- Package Source Configuration -------------- ;
 
-[CRAN]
-DelaySyncDuration = 72h
+; [CRAN]
+; DelaySyncDuration = 72h
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#CRAN.DelaySyncDuration
+; Automatically delay sync by a certain number of [hours|days]
 
-[PyPI]
-DelaySyncDuration = 72h
+; [PyPI]
+; DelaySyncDuration = 72h
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#PyPI.DelaySyncDuration
+; Automatically delay sync by a certain number of [hours|days]
 
 ; -------------- Database Configuration -------------- ;
 ;
