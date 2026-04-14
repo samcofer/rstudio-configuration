@@ -15,12 +15,12 @@
 ; features like including links to your content in emails. If Connect is deployed behind
 ; an HTTP proxy, this should be the URL for Connect in terms of that proxy.
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
-Address = {{ REPLACEME }}
+Address = "CONNECT-URL-HERE"  ; TODO: Replace this with your Connect Server URL that your users will use in their browser.
 
 ; SenderEmail is an email address used by Posit Connect to send outbound email. The system
 ; will not be able to send administrative email until this setting is configured.
 ; https://docs.posit.co/connect/admin/email/
-SenderEmail = {{ REPLACEME }}
+; SenderEmail = {{ REPLACEME }}
 
 ; EmailTo changes the default from sending email to users to BCCing them for security
 ; in the event that an email is inadvertently forwarded externally to your organization.
@@ -34,23 +34,20 @@ SenderEmail = {{ REPLACEME }}
 
 ; Uncomment one of the following definitions to enable email-related features
 ;EmailProvider = "SMTP"
-;EmailProvider = "sendmail"
-
-; MailAll controls whether scheduled reports can send email to all users
-; https://docs.posit.co/connect/admin/appendix/configuration/#Server.MailAll
-;MailAll = false
 
 ; ServerName customizes the server name displayed in the UI and headers
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.ServerName
 ;ServerName = "Posit Connect"
 
-; HideVersion suppresses version information in the UI for security hardening
-; https://docs.posit.co/connect/admin/appendix/configuration/#Server.HideVersion
-;HideVersion = true
 
-; CustomHeader allows adding custom HTTP response headers (e.g., Content-Security-Policy)
-; https://docs.posit.co/connect/admin/security/index.html#content-security-policy
-;CustomHeader = "Content-Security-Policy: script-src 'self'"
+PublicWarning = "<strong>Warning:</strong> Scheduled downtime this weekend."
+LoggedInWarning = "Data Science Team Meeting Tomorrow"
+
+;---------------------ENHANCED----------------------;
+
+DataDir, 
+;------------------END - ENHANCED-------------------;
+
 
 ; -------------- Package Source Configuration -------------- ;
 ;
@@ -61,7 +58,8 @@ SenderEmail = {{ REPLACEME }}
 ; in a much smoother Connect experience with faster package installations.
 
 [RPackageRepository "CRAN"]
-URL = "{{ REPLACEME }}"
+URL = "" ; TODO: Update this field with the binary/OS specific link to your CRAN 
+         ; repository of choice. eg, https://packagemanager.posit.co/cran/__linux__/noble/latest 
 
 ; -------------- SMTP Email Configuration -------------- ;
 ;
@@ -69,22 +67,38 @@ URL = "{{ REPLACEME }}"
 ; Email configuration options for SMTP, which is the most common email provider
 ; for most organizations. Configure host, port, and authentication details here.
 
-[SMTP]
-Host = "{{ REPLACEME }}"
-Port = 25
-SSL = false
-StartTLS = "detect"
+; [SMTP]
+; Host = "{{ REPLACEME }}"
+; Port = 25
+; SSL = false
+; StartTLS = "detect"
+; User = "{{ REPLACEME }}"
+; Password = "{{ REPLACEME }}"
 
-;User = "{{ REPLACEME }}"
-;Password = "{{ REPLACEME }}"
+
+
+; -------------- HTTP Configuration -------------- ;                                                                
+;                                                                                                                   
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTP                                                  
+; Controls how Posit Connect listens for HTTP (non-TLS) connections. At least one of                                
+; HTTP.Listen, HTTP.UnixDomainSocket, HTTPS.Listen, or HTTPS.UnixDomainSocket is required.                        
+; When running behind a reverse proxy that handles TLS termination, use NoWarning and
+; ForceSecure to suppress insecure connection warnings and ensure cookies are marked secure.
+
+[HTTP]
+
+; Network address Connect will listen on for HTTP connections. Can be :PORT or IP:PORT.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTP.Listen
+Listen = :3939
+
 
 ; -------------- HTTP Redirect Configuration -------------- ;
 ;
 ; https://docs.posit.co/connect/admin/security/index.html#guaranteeing-https
 ; Automatically redirects HTTP traffic to HTTPS when Permanent is enabled below.
 
-[HTTPRedirect]
-Listen = :80
+; [HTTPRedirect]
+; Listen = :80
 
 ; -------------- HTTPS / TLS Configuration -------------- ;
 ;
@@ -93,27 +107,27 @@ Listen = :80
 ; Permanent=true enables HSTS (HTTP Strict Transport Security) which forces browsers to
 ; always use HTTPS, even if users type http:// in the address bar.
 
-[HTTPS]
+; [HTTPS]
 
 ; Posit Connect will listen on this network address for HTTPS connections
-Listen = :443
+; Listen = :443
 
 ; Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate
 ; authority, the certificate file should be the concatenation of the server's certificate
 ; followed by the CA's certificate
-Certificate = {{ REPLACEME }}
+; Certificate = "/path/to/certificate/connect.crt" ; TODO: Update with the path to your fullchain certificate that includes your Root CA Certificate
 
 ; Path to a PEM encoded private key file corresponding to the certificate specified above
-Key = {{ REPLACEME }}
+; Key = "/path/to/certificate/connect.key" ; TODO: Update with the path to your private keyfile that includes your Root
 
 ; Permanent enables HSTS (HTTP Strict Transport Security) and sets secure flag on cookies
 ; WARNING: Setting this to true will force HTTPS permanently in browsers
 ; https://docs.posit.co/connect/admin/security/index.html#guaranteeing-https
-Permanent = true
+; Permanent = true
 
 ; MinimumTLS restricts to TLS 1.2 and above for security hardening
 ; https://docs.posit.co/connect/admin/security/index.html#strong-https
-MinimumTLS = 1.2
+; MinimumTLS = 1.2
 
 ; -------------- R Configuration -------------- ;
 ;
@@ -124,8 +138,11 @@ MinimumTLS = 1.2
 ; matching strategy to control compatibility (nearest, major-minor, or exact).
 
 [R]
-Executable = {{ REPLACEME }}
-Executable = {{ REPLACEME }}
+Enabled = true
+; Configure an executable line for each installed version of R. Versions of R installed using
+; Posit binaries can be located with this command: ls -ld /opt/R/*/bin/R
+Executable = "" ; TODO: Populate this value with your path to the R binary, eg: /opt/R/4.5.3/bin/R
+Executable = "" ; TODO: Populate this value with your path to the R binary, eg: /opt/R/4.4.3/bin/R
 
 ; -------------- Python Configuration -------------- ;
 ;
@@ -136,8 +153,10 @@ Executable = {{ REPLACEME }}
 
 [Python]
 Enabled = true
-Executable = {{ REPLACEME }}
-Executable = {{ REPLACEME }}
+; Configure an executable line for each installed version of Python. Versions of Python installed using
+; Posit binaries can be located with this command: ls -ld /opt/python/*/bin/python
+Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/python/3.13.12/bin/python
+Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/python/3.12.12/bin/python
 
 ; -------------- Quarto Configuration -------------- ;
 ;
@@ -148,8 +167,9 @@ Executable = {{ REPLACEME }}
 
 [Quarto]
 Enabled = true
-Executable = {{ REPLACEME }}
-Executable = {{ REPLACEME }}
+; Configure an executable line for each installed version of Quarto. Versions of Quarto installed using
+; Posit binaries can be located with this command: ls -ld /opt/quarto/*/bin/quarto
+Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/quarto/1.9.17/bin/quarto
 
 ; -------------- Logging Configuration -------------- ;
 ;
@@ -194,19 +214,13 @@ ViewersCanOnlySeeThemselves = true
 
 [Authentication]
 
-; Authentication provider - uncomment one (saml, oauth2, password, pam, ldap, proxy)
-;Provider = saml
+; Authentication provider - one (saml, oauth2, password, pam, ldap, proxy)
 ;Provider = oauth2
 
 ; Lifetime controls maximum session duration before requiring re-authentication
 ; https://docs.posit.co/connect/admin/security/index.html#limiting-session-lifetime
-Lifetime = 12h
+; Lifetime = 12h ???
 
-; Inactivity controls idle timeout before requiring re-authentication
-Inactivity = 8h
-
-; APIKeyAuth enables API key authentication for programmatic access
-APIKeyAuth = true
 
 ; -------------- SAML Authentication Configuration -------------- ;
 ;
@@ -215,27 +229,30 @@ APIKeyAuth = true
 ; with outbound internet access) or IdPMetaDataPath (for air-gapped systems).
 ; GroupsAutoProvision automatically creates groups based on SAML assertions.
 
-[SAML]
+
+
+
+;[SAML]
 
 ; IdP Metadata - use URL for internet-connected systems or Path for air-gapped
 ;IdPMetaDataURL = {{ REPLACEME }}
 ;IdPMetaDataPath = {{ REPLACEME }}
 
 ; Post binding is required for many IDPs, most commonly for Azure
-IdPSingleSignOnPostBinding = true
+; IdPSingleSignOnPostBinding = true
 
 ; SAML attribute mapping - adjust these based on your IdP's SAML assertions
-UniqueIDAttribute = NameID
-NameIDFormat = unspecified
-UsernameAttribute = Username
-FirstNameAttribute = FirstName
-LastNameAttribute = LastName
-EmailAttribute = Email
+; UniqueIDAttribute = NameID
+; NameIDFormat = unspecified
+; UsernameAttribute = Username
+; FirstNameAttribute = FirstName
+; LastNameAttribute = LastName
+; EmailAttribute = Email
 
 ; Group membership management
-; https://docs.posit.co/connect/admin/authentication/saml-based/saml/#saml-groups
-GroupsAttribute = Groups
-GroupsAutoProvision = true
+; https://docs.posit.co/connect/admin/authentication/saml-based/saml/;saml-groups
+; GroupsAttribute = Groups
+; GroupsAutoProvision = true
 
 ; Enable verbose SAML logging for troubleshooting authentication issues
 ;Logging = true
@@ -259,20 +276,6 @@ RequireUsernameClaim = true
 ; Automatically create groups from OAuth2/OIDC claims
 ; https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
 GroupsAutoProvision = true
-
-; Restrict login to specific groups (recommended for access control)
-; https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#user-provisioning
-;PermittedLoginGroup = "connect-users"
-;PermittedLoginGroup = "data-science-team"
-
-; Restrict login to specific email domains
-;AllowedDomain = "company.com"
-
-; Restrict login to specific email addresses
-;AllowedEmail = "user@company.com"
-
-; Disable automatic user registration (requires API-based provisioning)
-;RegisterOnFirstLogin = false
 
 ; Enable verbose OAuth2 logging for troubleshooting authentication issues
 ;Logging = true
