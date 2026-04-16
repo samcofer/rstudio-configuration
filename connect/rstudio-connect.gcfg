@@ -15,12 +15,12 @@
 ; features like including links to your content in emails. If Connect is deployed behind
 ; an HTTP proxy, this should be the URL for Connect in terms of that proxy.
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
-Address = "CONNECT-URL-HERE"  ; TODO: Replace this with your Connect Server URL that your users will use in their browser.
+;Address = "CONNECT-URL-HERE"  ; TODO: Replace this with your Connect Server URL that your users will use in their browser.
 
 ; SenderEmail is an email address used by Posit Connect to send outbound email. The system
 ; will not be able to send administrative email until this setting is configured.
 ; https://docs.posit.co/connect/admin/email/
-; SenderEmail = {{ REPLACEME }}
+; SenderEmail = {{ REPLACEME }} ; TODO: Update with the email address Connect uses to send outbound email
 
 ; EmailTo changes the default from sending email to users to BCCing them for security
 ; in the event that an email is inadvertently forwarded externally to your organization.
@@ -58,8 +58,8 @@ DataDir,
 ; in a much smoother Connect experience with faster package installations.
 
 [RPackageRepository "CRAN"]
-URL = "" ; TODO: Update this field with the binary/OS specific link to your CRAN 
-         ; repository of choice. eg, https://packagemanager.posit.co/cran/__linux__/noble/latest 
+;URL = "" ; TODO: Update this field with the binary/OS specific link to your CRAN
+         ; repository of choice. eg, https://packagemanager.posit.co/cran/__linux__/noble/latest
 
 ; -------------- SMTP Email Configuration -------------- ;
 ;
@@ -68,12 +68,12 @@ URL = "" ; TODO: Update this field with the binary/OS specific link to your CRAN
 ; for most organizations. Configure host, port, and authentication details here.
 
 ; [SMTP]
-; Host = "{{ REPLACEME }}"
+; Host = "{{ REPLACEME }}" ; TODO: Update with your SMTP server hostname
 ; Port = 25
 ; SSL = false
 ; StartTLS = "detect"
-; User = "{{ REPLACEME }}"
-; Password = "{{ REPLACEME }}"
+; User = "{{ REPLACEME }}" ; TODO: Update with your SMTP username
+; Password = "{{ REPLACEME }}" ; TODO: Update with your SMTP password
 
 
 
@@ -141,8 +141,8 @@ Listen = :3939
 Enabled = true
 ; Configure an executable line for each installed version of R. Versions of R installed using
 ; Posit binaries can be located with this command: ls -ld /opt/R/*/bin/R
-Executable = "" ; TODO: Populate this value with your path to the R binary, eg: /opt/R/4.5.3/bin/R
-Executable = "" ; TODO: Populate this value with your path to the R binary, eg: /opt/R/4.4.3/bin/R
+;Executable = "" ; TODO: Populate this value with your path to the R binary, eg: /opt/R/4.5.3/bin/R
+;Executable = "" ; TODO: Populate this value with your path to the R binary, eg: /opt/R/4.4.3/bin/R
 
 ; -------------- Python Configuration -------------- ;
 ;
@@ -155,8 +155,8 @@ Executable = "" ; TODO: Populate this value with your path to the R binary, eg: 
 Enabled = true
 ; Configure an executable line for each installed version of Python. Versions of Python installed using
 ; Posit binaries can be located with this command: ls -ld /opt/python/*/bin/python
-Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/python/3.13.12/bin/python
-Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/python/3.12.12/bin/python
+;Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/python/3.13.12/bin/python
+;Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/python/3.12.12/bin/python
 
 ; -------------- Quarto Configuration -------------- ;
 ;
@@ -169,7 +169,7 @@ Executable = "" ; TODO: Populate this value with your path to the Python binary,
 Enabled = true
 ; Configure an executable line for each installed version of Quarto. Versions of Quarto installed using
 ; Posit binaries can be located with this command: ls -ld /opt/quarto/*/bin/quarto
-Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/quarto/1.9.17/bin/quarto
+;Executable = "" ; TODO: Populate this value with your path to the Python binary, eg: /opt/quarto/1.9.17/bin/quarto
 
 ; -------------- Logging Configuration -------------- ;
 ;
@@ -201,9 +201,9 @@ ViewersCanOnlySeeThemselves = true
 ; For SAML: https://docs.posit.co/connect/admin/authentication/saml-based/saml/#using-group-memberships
 ; For OIDC: https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
 ;UserRoleGroupMapping = true
-;ViewerRoleMapping = "{{ REPLACEME }}"
-;PublisherRoleMapping = "{{ REPLACEME }}"
-;AdministratorRoleMapping = "{{ REPLACEME }}"
+;ViewerRoleMapping = "{{ REPLACEME }}" ; TODO: Update with the group name for viewers
+;PublisherRoleMapping = "{{ REPLACEME }}" ; TODO: Update with the group name for publishers
+;AdministratorRoleMapping = "{{ REPLACEME }}" ; TODO: Update with the group name for administrators
 
 ; -------------- Authentication Configuration -------------- ;
 ;
@@ -232,11 +232,11 @@ ViewersCanOnlySeeThemselves = true
 
 
 
-;[SAML]
+[SAML]
 
 ; IdP Metadata - use URL for internet-connected systems or Path for air-gapped
-;IdPMetaDataURL = {{ REPLACEME }}
-;IdPMetaDataPath = {{ REPLACEME }}
+;IdPMetaDataURL = {{ REPLACEME }} ; TODO: Update with your SAML IdP metadata URL
+;IdPMetaDataPath = {{ REPLACEME }} ; TODO: Update with the path to your SAML IdP metadata XML file
 
 ; Post binding is required for many IDPs, most commonly for Azure
 ; IdPSingleSignOnPostBinding = true
@@ -266,9 +266,9 @@ ViewersCanOnlySeeThemselves = true
 
 [OAuth2]
 
-ClientId = "{{ REPLACEME }}"
-ClientSecret = "{{ REPLACEME }}"
-OpenIDConnectIssuer = "{{ REPLACEME }}"
+;ClientId = "{{ REPLACEME }}" ; TODO: Update with your OAuth2 client ID
+;ClientSecret = "{{ REPLACEME }}" ; TODO: Update with your OAuth2 client secret
+;OpenIDConnectIssuer = "{{ REPLACEME }}" ; TODO: Update with your OpenID Connect issuer URL
 
 ; Require username claim in tokens (recommended)
 RequireUsernameClaim = true

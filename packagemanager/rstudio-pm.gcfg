@@ -16,7 +16,7 @@
 ; served from a subdirectory (e.g., /rspm) to facilitate generating URLs for rspm CLI,
 ; Swagger docs, and PyPI simple index pages.
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Server.Settings
-Address = "PM-URL-HERE"  ; TODO: Replace this with your PM Server URL that your users will use in their browser.
+;Address = "PM-URL-HERE"  ; TODO: Replace this with your PM Server URL that your users will use in their browser.
 
 ;---------------------ENHANCED----------------------;
 
@@ -124,8 +124,8 @@ DelaySyncDuration = 72h
 
 ; [Proxy]
 ; URL = http://proxy.company.com:3128
-; User = {{ REPLACEME }}
-; Password = {{ REPLACEME }}
+; User = {{ REPLACEME }} ; TODO: Update with your proxy username
+; Password = {{ REPLACEME }} ; TODO: Update with your proxy password
 
 ;---------------------ENHANCED----------------------;
 
@@ -186,6 +186,6 @@ DelaySyncDuration = 72h
 ; repositories. Requires offline data files to be downloaded separately.
 
 [Manifest]
-;URL = file:///path/to/offline/data
+;URL = file:///path/to/offline/data ; TODO: Update with the path to your offline data directory
 
 ;------------------END - ADVANCED-------------------;
