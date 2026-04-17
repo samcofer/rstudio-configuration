@@ -250,7 +250,7 @@ ViewersCanOnlySeeThemselves = true
 ; EmailAttribute = Email
 
 ; Group membership management
-; https://docs.posit.co/connect/admin/authentication/saml-based/saml/;saml-groups
+; https://docs.posit.co/connect/admin/authentication/saml-based/saml/index.html#local-groups
 ; GroupsAttribute = Groups
 ; GroupsAutoProvision = true
 

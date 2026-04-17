@@ -26,4 +26,6 @@ jobs:
             --exclude 'user@company\.com'
             --exclude 'https://packagemanager.posit.co/cran/__linux__/$'
             --exclude 'https://packagemanager.posit.co/bioconductor/__linux__/$'
+            --exclude 'http://localhost'
+            --exclude 'https://packagemanager.posit.co/cran/__linux__/noble/latest'
       - run: echo "🍏 This job's status is ${{ job.status }}."
