@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__kapa__kapa_chat",
+      "mcp__kapa__kapa_chat_followup",
+      "mcp__gmail__gmail_search_messages",
+      "mcp__gmail__gmail_read_thread",
+      "mcp__gmail__gmail_read_message",
+      "mcp__gmail__gmail_get_profile",
+      "mcp__gmail__gmail_create_draft",
+      "mcp__gmail__gmail_list_drafts",
+      "mcp__slack__conversations_search_messages",
+      "mcp__obsidian__search_notes",
+      "mcp__obsidian__read_note",
+      "mcp__zendesk__search",
+      "mcp__zendesk__list_ticket_comments",
+      "mcp__pulumi__get-resource",
+      "mcp__pulumi__get-type"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "quarto.path": "/usr/lib/rstudio-server/bin/quarto/bin/quarto",
+  "python.interpreters.exclude": [
+    "/usr/bin",
+    "/bin"
+  ],
+  "python.environmentProviders.enable": {
+    "Conda": false
+  }
+}
