@@ -1,15 +1,16 @@
 #Launcher Environment Configuration
 #https://docs.posit.co/ide/server-pro/admin/job_launcher/configuration.html#launcher-env-conf
 
-# RHEL Environment setting to make Python use the system certificate store, 
-# useful in self-signed certificates scenarios
+# TODO: Uncomment ONE of the following blocks to match your Linux distribution.
+# This ensures Python's requests library trusts the system certificate store,
+# which is required in self-signed certificate environments.
+
+# RHEL / CentOS / Fedora
 # JobType: any
 # Workbench: any
 # Environment: REQUESTS_CA_BUNDLE=/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
 
-
-# Ubuntu/Deb Environment setting to make Python use the system certificate store,
-# useful in self-signed certificates scenarios
+# Ubuntu / Debian
 # JobType: any
 # Workbench: any
 # Environment: REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
