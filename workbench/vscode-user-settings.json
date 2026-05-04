@@ -7,6 +7,5 @@
   "extensions.autoUpdate": false,
   "extensions.autoCheckUpdates": false,
   "quarto.path": "/usr/lib/rstudio-server/bin/quarto/bin/quarto",
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1000
+  "window.autoDetectColorScheme": true
 }

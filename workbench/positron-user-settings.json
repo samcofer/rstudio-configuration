@@ -13,5 +13,6 @@
   ],
   "python.environmentProviders.enable": {
     "Conda": false
-  }
+  },
+  "window.autoDetectColorScheme": true
 }
