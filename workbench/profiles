@@ -12,7 +12,7 @@
 # After modifying this file, restart Workbench: sudo rstudio-server restart
 #-----------------------------------------------------------------------------------------#
 [*]
-positron-enforced-settings = /etc/rstudio/positron-enforced-settings.json
+positron-enforced-settings = /etc/rstudio/positron-enforced-settings/default.json
 
 #-----------------------------------------------------------------------------------------#
 # Group-Based Enforced Settings (Example)
@@ -21,7 +21,7 @@ positron-enforced-settings = /etc/rstudio/positron-enforced-settings.json
 # You can create different enforced settings for specific Unix groups.
 #-----------------------------------------------------------------------------------------#
 #[@data-science]
-#positron-enforced-settings = /etc/rstudio/data-science-enforced-settings.json
+#positron-enforced-settings = /etc/rstudio/positron-enforced-settings/data-science.json
 
 #-----------------------------------------------------------------------------------------#
 # User-Based Enforced Settings (Example)
@@ -30,4 +30,4 @@ positron-enforced-settings = /etc/rstudio/positron-enforced-settings.json
 # You can create different enforced settings for specific users.
 #-----------------------------------------------------------------------------------------#
 #[jsmith]
-#positron-enforced-settings = /etc/rstudio/jsmith-enforced-settings.json
+#positron-enforced-settings = /etc/rstudio/positron-enforced-settings/jsmith.json
