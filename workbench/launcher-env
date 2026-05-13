@@ -1,5 +1,6 @@
-#Launcher Environment Configuration
-#https://docs.posit.co/ide/server-pro/admin/job_launcher/configuration.html#launcher-env-conf
+# Posit Workbench Launcher Environment Configuration File
+#
+# Full Configuration Reference: https://docs.posit.co/ide/server-pro/admin/job_launcher/configuration.html#launcher-env-conf
 
 # TODO: Uncomment ONE of the following blocks to match your Linux distribution.
 # This ensures Python's requests library trusts the system certificate store,
@@ -14,3 +15,27 @@
 # JobType: any
 # Workbench: any
 # Environment: REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+#-----------------------------------------------------------------------------------------#
+# VS Code / Positron Extension Gallery (Package Manager)
+#
+# https://docs.posit.co/rspm/admin/workbench.html#vsx-extensions
+# Point VS Code and Positron sessions to a custom extensions gallery hosted by Posit
+# Package Manager instead of the default open-vsx.org. Requires Package Manager to be
+# served over HTTPS with a valid (CA-signed) TLS certificate. The VSX repository must
+# NOT use --authenticated; use network-level controls for access restriction instead.
+#-----------------------------------------------------------------------------------------#
+# JobType: session
+# Workbench: any
+# Environment: EXTENSIONS_GALLERY={"serviceUrl":"https://packagemanager.example.com/openvsx/latest/vscode/gallery","itemUrl":"https://packagemanager.example.com/openvsx/latest/vscode/item"}
+
+#-----------------------------------------------------------------------------------------#
+# Node.js CA Certificates (for self-signed TLS with Package Manager)
+#
+# https://docs.posit.co/rspm/admin/workbench.html#vsx-extensions
+# If Package Manager uses a self-signed certificate, VS Code / Positron need this set
+# so Node.js trusts the internal CA when fetching extensions from the gallery.
+#-----------------------------------------------------------------------------------------#
+# JobType: session
+# Workbench: any
+# Environment: NODE_EXTRA_CA_CERTS=/etc/ssl/certs/my-internal-ca.pem
