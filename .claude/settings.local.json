@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__kapa__kapa_chat",
+      "mcp__kapa__kapa_chat_followup",
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh api:*)",
+      "Bash(scp *)",
+      "Bash(ssh *)",
+      "mcp__drive__search_files",
+      "mcp__drive__read_file_content",
+      "Bash(claude mcp *)",
+      "Bash(curl *)",
+      "mcp__drive__list_recent_files",
+      "Bash(python3 -c \"import json,sys; tabs=json.load\\(sys.stdin\\); [print\\(f'{i}: {t[\\\\\"title\\\\\"][:80]} | {t[\\\\\"url\\\\\"][:80]}'\\) for i,t in enumerate\\(tabs\\)]\")",
+      "Bash(python3 -c ' *)",
+      "Bash(git push *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
