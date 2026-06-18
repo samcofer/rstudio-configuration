@@ -1,7 +1,7 @@
 {
   "_comment": "Positron Default User Settings Template - /etc/rstudio/positron-user-settings.json",
   "_documentation": "https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html",
-  "_note": "These settings are merged into each user's Positron settings.json on first launch. Users CAN override these after initial merge. For truly enforced settings that users cannot change, use positron-enforced-settings.json and register it in the profiles file.",
+  "_note": "These settings are merged into each user's Positron settings.json on first launch. Users can override these after initial merge. For enforced settings that users cannot change, see: https://docs.posit.co/ide/server-pro/admin/positron_sessions/user_settings.html#enforced-settings",
 
   "terminal.integrated.defaultProfile.linux": "bash",
   "extensions.autoUpdate": false,
@@ -14,9 +14,5 @@
   "python.environmentProviders.enable": {
     "Conda": false
   },
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1000,
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2,
-  "workbench.colorTheme": "Default Dark+"
+  "window.autoDetectColorScheme": true
 }
