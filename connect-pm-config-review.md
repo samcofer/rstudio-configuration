@@ -8,16 +8,20 @@ Date: 2026-06-18 · Branch: `review-connect-pm-configs`
 
 ---
 
-## TL;DR — what needs a decision
+## TL;DR — findings and disposition
 
-| # | Item | Product | Severity |
-|---|------|---------|----------|
-| 1 | Live `{{ REPLACEME }}` placeholders on **uncommented** required keys will hard-fail startup | Both | High |
-| 2 | Package Manager config has **no authentication guidance at all** | PM | High |
-| 3 | Adopt Workbench `# TODO:` placeholder convention in place of `{{ REPLACEME }}` | Both | Medium |
-| 4 | Postgres password should be a separate encrypted value, not inline in the URL | PM | Medium |
-| 5 | Document PKCE (now default-on, 2026.01) and HSTS max-age (2024.09) | Connect | Low |
-| 6 | `Lifetime = 12h` is stricter than product default (24h) — confirm intent | Connect | Low (info) |
+| # | Item | Product | Severity | Disposition |
+|---|------|---------|----------|-------------|
+| 1 | Live `{{ REPLACEME }}` placeholders on **uncommented** required keys will hard-fail startup | Both | High | **Applied** |
+| 2 | Package Manager config has **no authentication guidance at all** | PM | High | Deferred (doc only) |
+| 3 | Adopt Workbench `TODO:` placeholder convention in place of `{{ REPLACEME }}` | Both | Medium | **Applied** |
+| 4 | Postgres password should be a separate encrypted value, not inline in the URL | PM | Medium | **Applied** |
+| 5 | Document PKCE (default-on, 2026.01) and HSTS max-age (2024.09) | Connect | Low | **Applied** (HSTS + PKCE comment) |
+| 6 | `Lifetime = 12h` is stricter than product default (24h) — confirm intent | Connect | Low (info) | No change (intentional) |
+
+> All `{{ REPLACEME }}` tokens have been removed from both files. Required keys are now
+> commented out with example values + `TODO:` notes, so each file is valid as-shipped.
+> Item 2 (PM auth template) was intentionally deferred and remains documented below only.
 
 No **deprecated or removed** settings are present in either file — both are clean against
 the 2024–2026 deprecation list (verified: `Server.RVersion*`, `Packages.External`,

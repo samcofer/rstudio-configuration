@@ -16,7 +16,8 @@
 ; served from a subdirectory (e.g., /rspm) to facilitate generating URLs for rspm CLI,
 ; Swagger docs, and PyPI simple index pages.
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Server.Settings
-Address = {{ REPLACEME }}
+; TODO: Set to your Package Manager server's public URL
+;Address = https://packagemanager.example.com
 
 ; DataDir is the directory where Package Manager stores variable data (SQLite DB, cache,
 ; packages, etc.). Change this if you want data on another volume (e.g. larger disk, NFS).
@@ -57,11 +58,13 @@ Address = {{ REPLACEME }}
 ; the certificate file should be the concatenation of the server's certificate followed
 ; by the CA's certificate. Must be paired with HTTPS.Key.
 ; https://docs.posit.co/rspm/admin/networking.html#configuring-ssl-certificates
-Certificate = {{ REPLACEME }}
+; TODO: Set to the path of your TLS certificate file (644, owned by rstudio-pm)
+;Certificate = /etc/rstudio-pm/certs/packagemanager.crt
 
 ; Path to a private key file corresponding to the certificate specified with HTTPS.Certificate
 ; Required when HTTPS.Certificate is specified
-Key = {{ REPLACEME }}
+; TODO: Set to the path of your TLS private key file (600, owned by rstudio-pm, no passphrase)
+;Key = /etc/rstudio-pm/certs/packagemanager.key
 
 ; Posit Package Manager will listen on this network address for HTTPS connections.
 ; The network address can be of the form :443 or 192.168.0.1:443.
@@ -98,9 +101,18 @@ Listen = ":80"
 ;Dir = /var/lib/rstudio-pm
 
 ; PostgreSQL - recommended for HA and production deployments
-; Uncomment and configure for PostgreSQL
+; Uncomment and configure for PostgreSQL. Keep the password OUT of the URL: supply it
+; separately via Postgres.Password as a base64-encoded encrypted value (use:
+; rstudio-pm encrypt). Use sslmode=verify-full in production for full cert validation.
+; https://docs.posit.co/rspm/admin/database.html#postgres-passwords
+;[Database]
+;Provider = postgres
+;
 ;[Postgres]
-;URL = "postgres://username:password@hostname:5432/database_name?sslmode=require"
+; TODO: Set to your PostgreSQL host/database (omit the password here)
+;URL = "postgres://username@hostname:5432/database_name?sslmode=verify-full"
+; TODO: Set to your base64-encoded encrypted password (use: rstudio-pm encrypt)
+;Password = "<base64 encrypted password value>"
 
 ; -------------- Proxy Configuration -------------- ;
 ;
@@ -109,9 +121,10 @@ Listen = ":80"
 ; Required if Package Manager cannot directly access the internet.
 
 [Proxy]
+; TODO: Set if Package Manager must reach external repos through an outbound proxy
 ;URL = http://proxy.company.com:3128
-;User = {{ REPLACEME }}
-;Password = {{ REPLACEME }}
+;User = proxy-user
+;Password = proxy-password
 
 ; -------------- Git Sources Configuration -------------- ;
 ;

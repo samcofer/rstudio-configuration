@@ -15,12 +15,14 @@
 ; features like including links to your content in emails. If Connect is deployed behind
 ; an HTTP proxy, this should be the URL for Connect in terms of that proxy.
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.Address
-Address = {{ REPLACEME }}
+; TODO: Set to your Connect server's public URL
+;Address = https://connect.example.com
 
 ; SenderEmail is an email address used by Posit Connect to send outbound email. The system
 ; will not be able to send administrative email until this setting is configured.
 ; https://docs.posit.co/connect/admin/email/
-SenderEmail = {{ REPLACEME }}
+; TODO: Set to the address Connect should send outbound email from
+;SenderEmail = no-reply@example.com
 
 ; EmailTo changes the default from sending email to users to BCCing them for security
 ; in the event that an email is inadvertently forwarded externally to your organization.
@@ -60,8 +62,10 @@ SenderEmail = {{ REPLACEME }}
 ; Note: This will override your data scientists' CRAN repository, but generally results
 ; in a much smoother Connect experience with faster package installations.
 
-[RPackageRepository "CRAN"]
-URL = "{{ REPLACEME }}"
+; TODO: Set to your Package Manager CRAN repo URL, eg:
+;       https://packagemanager.posit.co/cran/__linux__/jammy/latest
+;[RPackageRepository "CRAN"]
+;URL = "https://packagemanager.example.com/cran/__linux__/jammy/latest"
 
 ; -------------- SMTP Email Configuration -------------- ;
 ;
@@ -70,13 +74,15 @@ URL = "{{ REPLACEME }}"
 ; for most organizations. Configure host, port, and authentication details here.
 
 [SMTP]
-Host = "{{ REPLACEME }}"
-Port = 25
-SSL = false
-StartTLS = "detect"
+; TODO: Set to your SMTP relay hostname
+;Host = "smtp.example.com"
+;Port = 25
+;SSL = false
+;StartTLS = "detect"
 
-;User = "{{ REPLACEME }}"
-;Password = "{{ REPLACEME }}"
+; TODO: Set if your SMTP relay requires authentication
+;User = "smtp-user"
+;Password = "smtp-password"
 
 ; -------------- HTTP Redirect Configuration -------------- ;
 ;
@@ -101,15 +107,22 @@ Listen = :443
 ; Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate
 ; authority, the certificate file should be the concatenation of the server's certificate
 ; followed by the CA's certificate
-Certificate = {{ REPLACEME }}
+; TODO: Set to the path of your TLS certificate file
+;Certificate = /etc/rstudio-connect/certs/connect.crt
 
 ; Path to a PEM encoded private key file corresponding to the certificate specified above
-Key = {{ REPLACEME }}
+; TODO: Set to the path of your TLS private key file
+;Key = /etc/rstudio-connect/certs/connect.key
 
 ; Permanent enables HSTS (HTTP Strict Transport Security) and sets secure flag on cookies
 ; WARNING: Setting this to true will force HTTPS permanently in browsers
 ; https://docs.posit.co/connect/admin/security/index.html#guaranteeing-https
 Permanent = true
+
+; StrictTransportSecurityMaxAge customizes the HSTS max-age (added in 2024.09.0). Only
+; takes effect when Permanent = true. Default is 30 days; 1 year (below) is a common value.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS.StrictTransportSecurityMaxAge
+;StrictTransportSecurityMaxAge = 8760h
 
 ; MinimumTLS restricts to TLS 1.2 and above for security hardening
 ; https://docs.posit.co/connect/admin/security/index.html#strong-https
@@ -124,8 +137,9 @@ MinimumTLS = 1.2
 ; matching strategy to control compatibility (nearest, major-minor, or exact).
 
 [R]
-Executable = {{ REPLACEME }}
-Executable = {{ REPLACEME }}
+; TODO: Set one Executable line per installed R version (full path to the R binary)
+;Executable = /opt/R/4.4.2/bin/R
+;Executable = /opt/R/4.3.3/bin/R
 
 ; -------------- Python Configuration -------------- ;
 ;
@@ -136,8 +150,9 @@ Executable = {{ REPLACEME }}
 
 [Python]
 Enabled = true
-Executable = {{ REPLACEME }}
-Executable = {{ REPLACEME }}
+; TODO: Set one Executable line per installed Python version (full path to the python binary)
+;Executable = /opt/python/3.12.4/bin/python
+;Executable = /opt/python/3.11.9/bin/python
 
 ; -------------- Quarto Configuration -------------- ;
 ;
@@ -148,8 +163,8 @@ Executable = {{ REPLACEME }}
 
 [Quarto]
 Enabled = true
-Executable = {{ REPLACEME }}
-Executable = {{ REPLACEME }}
+; TODO: Set one Executable line per installed Quarto version (full path to the quarto binary)
+;Executable = /opt/quarto/1.5.57/bin/quarto
 
 ; -------------- Logging Configuration -------------- ;
 ;
@@ -180,10 +195,11 @@ ViewersCanOnlySeeThemselves = true
 ; Automatically map incoming users to Connect roles based on group membership
 ; For SAML: https://docs.posit.co/connect/admin/authentication/saml-based/saml/#using-group-memberships
 ; For OIDC: https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
+; TODO: Set each *RoleMapping to the IdP group name that should receive that Connect role
 ;UserRoleGroupMapping = true
-;ViewerRoleMapping = "{{ REPLACEME }}"
-;PublisherRoleMapping = "{{ REPLACEME }}"
-;AdministratorRoleMapping = "{{ REPLACEME }}"
+;ViewerRoleMapping = "connect-viewers"
+;PublisherRoleMapping = "connect-publishers"
+;AdministratorRoleMapping = "connect-admins"
 
 ; -------------- Authentication Configuration -------------- ;
 ;
@@ -218,8 +234,9 @@ APIKeyAuth = true
 [SAML]
 
 ; IdP Metadata - use URL for internet-connected systems or Path for air-gapped
-;IdPMetaDataURL = {{ REPLACEME }}
-;IdPMetaDataPath = {{ REPLACEME }}
+; TODO: Set one of the following to your IdP's SAML metadata location
+;IdPMetaDataURL = https://idp.example.com/saml/metadata
+;IdPMetaDataPath = /etc/rstudio-connect/saml/idp-metadata.xml
 
 ; Post binding is required for many IDPs, most commonly for Azure
 IdPSingleSignOnPostBinding = true
@@ -249,9 +266,15 @@ GroupsAutoProvision = true
 
 [OAuth2]
 
-ClientId = "{{ REPLACEME }}"
-ClientSecret = "{{ REPLACEME }}"
-OpenIDConnectIssuer = "{{ REPLACEME }}"
+; TODO: Set these to your IdP's OIDC client credentials and issuer URL
+;ClientId = "your-client-id"
+;ClientSecret = "your-client-secret"
+;OpenIDConnectIssuer = "https://idp.example.com"
+
+; PKCE (Proof Key for Code Exchange) is enabled by default since 2026.01.0.
+; Only set this to false if your IdP does not support PKCE.
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.UsePKCE
+;UsePKCE = false
 
 ; Require username claim in tokens (recommended)
 RequireUsernameClaim = true
