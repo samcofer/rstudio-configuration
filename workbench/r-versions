@@ -1,0 +1,31 @@
+# Posit Workbench R Versions Configuration File
+#
+# Full Configuration Reference: https://docs.posit.co/ide/server-pro/admin/r/using_multiple_versions_of_r.html#extended-r-version-definitions
+
+#-----------------------------------------------------------------------------------------#
+# R Version Entries
+#
+# Manually specify R installations available for sessions. Workbench auto-detects
+# R in standard locations (/opt/R, /usr/local/lib/R), so this file is only needed
+# when R is installed in non-standard paths or you need to set Labels, Modules,
+# Scripts, Repos, or Library paths per version.
+#
+# Available fields: Path (required), Label, Module, Script, Repo, Library
+# Separate entries with exactly one blank line. No blank lines within an entry.
+# Simple path-only entries (no field prefix) are also supported.
+#-----------------------------------------------------------------------------------------#
+
+# Extended entry with label and pre-session script
+#Path: /opt/R/4.4.2
+#Label: R 4.4.2
+#Script: /opt/R/4.4.2/env-setup.sh
+#
+# Entry using an environment module (e.g., Lmod on HPC clusters)
+#Path: /opt/R/4.3.3
+#Label: R 4.3.3
+#Module: r/4.3.3
+#
+# Simple path-only entries (no field prefix needed)
+# /opt/R/4.4.2
+# /opt/R/4.3.3
+# /opt/R/4.2.3
