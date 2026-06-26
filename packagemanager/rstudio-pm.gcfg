@@ -171,8 +171,12 @@ Listen = :4242
 [Manifest]
 
 ; URL of the manifest service. Default: https://rspm-sync.rstudio.com
+; Point at your own server/proxy, or for offline/air-gapped installs set it to a
+; file:// path to the offline data directory created by the offline downloader.
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Manifest.URL
+; https://docs.posit.co/rspm/admin/appendix/air-gapped-installs.html#configuring-package-manager
 ;URL = https://manifest.example.com
+;URL = file:///var/lib/rspm-offline-data
 
 ; User for the Authorization header when the manifest service requires authentication
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Manifest.User
