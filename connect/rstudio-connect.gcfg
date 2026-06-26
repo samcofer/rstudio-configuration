@@ -371,38 +371,12 @@ ViewersCanOnlySeeThemselves = true
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPMetaDataURL
 ;IdPMetaDataURL = https://idp.example.com/saml/metadata
 
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPMetaDataPath
-;IdPMetaDataPath = /etc/rstudio-connect/saml/idp-metadata.xml
-
-; Group membership management
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.GroupsAttribute
-;GroupsAttribute = Groups
-
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.GroupsAutoProvision
 ;GroupsAutoProvision = true
 
 ; Post binding is required for many IDPs, most commonly for Azure
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPSingleSignOnPostBinding
 ;IdPSingleSignOnPostBinding = true
-
-; SAML attribute mapping - adjust these based on your IdP's SAML assertions
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.UniqueIDAttribute
-;UniqueIDAttribute = NameID
-
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.NameIDFormat
-;NameIDFormat = unspecified
-
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.UsernameAttribute
-;UsernameAttribute = Username
-
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.FirstNameAttribute
-;FirstNameAttribute = FirstName
-
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.LastNameAttribute
-;LastNameAttribute = LastName
-
-; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.EmailAttribute
-;EmailAttribute = Email
 
 ; Enable verbose SAML logging for troubleshooting authentication issues
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.Logging
