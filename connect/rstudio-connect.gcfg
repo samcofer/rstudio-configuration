@@ -86,6 +86,7 @@ Listen = :3939
 
 [HTTPRedirect]
 
+; Network address to listen on for plain HTTP requests that are redirected to HTTPS
 ; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPRedirect.Listen
 ;Listen = :80
 
@@ -102,6 +103,7 @@ Listen = :3939
 
 [Database]
 
+; Provider selects the database backend: sqlite (default) or postgres
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Database.Provider
 ;Provider = postgres
 
@@ -127,12 +129,15 @@ Listen = :3939
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.Host
 ;Host = "smtp.example.com"
 
+; Port of the SMTP server used for email delivery (defaults to 25)
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.Port
 ;Port = 25
 
+; Enables SSL/TLS for the whole connection; typically required when using port 465
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.SSL
 ;SSL = false
 
+; Upgrades the connection to TLS - always, never, or detect; typically needed for port 587
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.StartTLS
 ;StartTLS = "detect"
 
@@ -140,6 +145,7 @@ Listen = :3939
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.User
 ;User = "smtp-user"
 
+; Password used to authenticate against the SMTP server
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.Password
 ;Password = "smtp-password"
 
@@ -153,6 +159,7 @@ Listen = :3939
 
 [R]
 
+; Enables R support for deployable content on Connect
 ; https://docs.posit.co/connect/admin/appendix/configuration/#R.Enabled
 Enabled = true
 
@@ -176,6 +183,7 @@ Enabled = true
 
 [RPackageRepository "CRAN"]
 
+; URL of the R package repository used when restoring packages during deployment
 ; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository.URL
 URL = "https://packagemanager.posit.co/cran/__linux__/manylinux_2_28/latest"
 
@@ -188,6 +196,7 @@ URL = "https://packagemanager.posit.co/cran/__linux__/manylinux_2_28/latest"
 
 [Python]
 
+; Enables Python support for deployable content on Connect (defaults to false)
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Python.Enabled
 Enabled = true
 
@@ -209,6 +218,7 @@ Enabled = true
 
 [PythonPackageRepository "PyPI"]
 
+; URL of the Python package index (PyPI mirror) used when installing content dependencies
 ; https://docs.posit.co/connect/admin/appendix/configuration/#PythonPackageRepository.URL
 URL = "https://packagemanager.posit.co/pypi/latest/simple"
 
@@ -221,6 +231,7 @@ URL = "https://packagemanager.posit.co/pypi/latest/simple"
 
 [Quarto]
 
+; Enables Quarto content support on Connect (defaults to false)
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Quarto.Enabled
 Enabled = true
 
@@ -238,6 +249,7 @@ Enabled = true
 
 [NodeJs]
 
+; Enables Node.js content support on Connect (defaults to false)
 ; https://docs.posit.co/connect/admin/appendix/configuration/#NodeJs.Enabled
 Enabled = true
 
@@ -319,9 +331,11 @@ ViewersCanOnlySeeThemselves = true
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.ViewerRoleMapping
 ;ViewerRoleMapping = "connect-viewers"
 
+; IdP group whose members are assigned the Publisher role at login
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.PublisherRoleMapping
 ;PublisherRoleMapping = "connect-publishers"
 
+; IdP group whose members are assigned the Administrator role at login
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.AdministratorRoleMapping
 ;AdministratorRoleMapping = "connect-admins"
 
@@ -338,9 +352,11 @@ ViewersCanOnlySeeThemselves = true
 ; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.ClientId
 ;ClientId = "your-client-id"
 
+; Client secret paired with ClientId for OAuth2/OpenID Connect authentication
 ; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.ClientSecret
 ;ClientSecret = "your-client-secret"
 
+; HTTPS URL of the OpenID Connect provider's discovery metadata endpoint
 ; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.OpenIDConnectIssuer
 ;OpenIDConnectIssuer = "https://idp.example.com"
 
@@ -371,6 +387,7 @@ ViewersCanOnlySeeThemselves = true
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPMetaDataURL
 ;IdPMetaDataURL = https://idp.example.com/saml/metadata
 
+; Automatically create Connect groups from the groups asserted in the SAML response
 ; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.GroupsAutoProvision
 ;GroupsAutoProvision = true
 

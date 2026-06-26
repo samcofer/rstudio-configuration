@@ -91,6 +91,7 @@ Listen = :4242
 
 [HTTPRedirect]
 
+; Network address to listen on for plain HTTP requests that are redirected to HTTPS
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#HttpRedirect.Listen
 ;Listen = ":80"
 
@@ -108,6 +109,7 @@ Listen = :4242
 
 [Database]
 
+; Provider selects the database backend: sqlite (default) or postgres
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Database.Provider
 ;Provider = postgres
 
@@ -154,9 +156,11 @@ Listen = :4242
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Proxy.URL
 ;URL = http://proxy.company.com:3128
 
+; Username sent in the Proxy-Authorization header for outbound proxy authentication
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Proxy.User
 ;User = proxy-user
 
+; Password sent in the Proxy-Authorization header for outbound proxy authentication
 ; https://docs.posit.co/rspm/admin/appendix/configuration.html#Proxy.Password
 ;Password = proxy-password
 
