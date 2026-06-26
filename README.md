@@ -8,7 +8,7 @@ The goal of this repository is to capture a new default set of configuration fil
 - Value verbosity and real-world examples over technical specifics. The target audience for these comments and links is the over-worked sysadmin who hasn't checked on Connect in a few months and is trying to fix an issue quickly without having to employ too much Google-Fu
 
 
-## Product Configuration Changes
+## Product Changes
 
 ### Connect
 
