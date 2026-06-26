@@ -18,54 +18,102 @@
 ; TODO: Set to your Connect server's public URL
 ;Address = https://connect.example.com
 
-; SenderEmail is an email address used by Posit Connect to send outbound email. The system
-; will not be able to send administrative email until this setting is configured.
-; https://docs.posit.co/connect/admin/email/
-; TODO: Set to the address Connect should send outbound email from
-;SenderEmail = no-reply@example.com
-
-; EmailTo changes the default from sending email to users to BCCing them for security
-; in the event that an email is inadvertently forwarded externally to your organization.
-; https://docs.posit.co/connect/admin/appendix/configuration/#Server.EmailTo
-;EmailTo = no-reply@example.org
-
-; Email branding customization options
-; https://docs.posit.co/connect/admin/appendix/branding/#custom-branding-emails
-;EmailSubjectPrefix = [PositConnect]
-;SenderEmailDisplayName = "Posit Connect"
-
-; Uncomment one of the following definitions to enable email-related features
-;EmailProvider = "SMTP"
-;EmailProvider = "sendmail"
-
-; MailAll controls whether scheduled reports can send email to all users
-; https://docs.posit.co/connect/admin/appendix/configuration/#Server.MailAll
-;MailAll = false
-
 ; ServerName customizes the server name displayed in the UI and headers
 ; https://docs.posit.co/connect/admin/appendix/configuration/#Server.ServerName
 ;ServerName = "Posit Connect"
 
-; HideVersion suppresses version information in the UI for security hardening
-; https://docs.posit.co/connect/admin/appendix/configuration/#Server.HideVersion
-;HideVersion = true
+; SenderEmail is an email address used by Posit Connect to send outbound email. The system
+; will not be able to send administrative email until this setting is configured.
+; https://docs.posit.co/connect/admin/appendix/configuration/#Server.SenderEmail
+; TODO: Set to the address Connect should send outbound email from
+;SenderEmail = no-reply@example.com
 
-; CustomHeader allows adding custom HTTP response headers (e.g., Content-Security-Policy)
-; https://docs.posit.co/connect/admin/security/index.html#content-security-policy
-;CustomHeader = "Content-Security-Policy: script-src 'self'"
+; TODO: Choose one of the following definitions to enable email-related features
+; https://docs.posit.co/connect/admin/appendix/configuration/#Server.EmailProvider
+;EmailProvider = "SMTP" or "sendmail"
 
-; -------------- Package Source Configuration -------------- ;
+; -------------- HTTP Configuration -------------- ;
 ;
-; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository
-; This option allows you to set repositories to use your internal Package Manager or
-; Posit Public Package Manager to pull binary packages which install much more quickly.
-; Note: This will override your data scientists' CRAN repository, but generally results
-; in a much smoother Connect experience with faster package installations.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTP
+; HTTP configuration for serving plain (non-TLS) connections. Use this when TLS is
+; terminated upstream (e.g. at a load balancer or reverse proxy) or for testing.
+; At least one of HTTP.Listen or HTTPS.Listen must be configured for Connect to accept
+; connections.
 
-; TODO: Set to your Package Manager CRAN repo URL, eg:
-;       https://packagemanager.posit.co/cran/__linux__/jammy/latest
-;[RPackageRepository "CRAN"]
-;URL = "https://packagemanager.example.com/cran/__linux__/jammy/latest"
+[HTTP]
+
+; Posit Connect will listen on this network address for HTTP connections.
+; The default port is 3939; set to :80 to serve on the standard HTTP port.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTP.Listen
+Listen = :3939
+
+; -------------- HTTPS / TLS Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS
+; HTTPS configuration including certificates and TLS versions. Configure HTTPS.Listen plus
+; a Certificate/Key pair to have Connect terminate TLS directly.
+
+[HTTPS]
+
+; Posit Connect will listen on this network address for HTTPS connections.
+; The network address can be of the form :443 or 192.168.0.1:443.
+; Either HTTP.Listen or HTTPS.Listen is required.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS.Listen
+;Listen = :443
+
+; Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate
+; authority, the certificate file should be the concatenation of the server's certificate
+; followed by the Intermediate and CA's certificate. Must be paired with HTTPS.Key.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS.Certificate
+; TODO: Set to the path of your TLS certificate file (644, owned by rstudio-connect)
+;Certificate = /etc/rstudio-connect/certs/connect.crt
+
+; Path to a PEM encoded private key file corresponding to the certificate specified with
+; HTTPS.Certificate. Required when HTTPS.Certificate is specified.
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS.Key
+; TODO: Set to the path of your TLS private key file (600, owned by rstudio-connect, no passphrase)
+;Key = /etc/rstudio-connect/certs/connect.key
+
+; MinimumTLS restricts to TLS 1.2 and above for security hardening
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS.MinimumTLS
+;MinimumTLS = 1.2
+
+; -------------- HTTP Redirect Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPRedirect
+; Redirects plain HTTP traffic to HTTPS. Set Listen to the HTTP address to redirect from;
+; requests are forwarded to the HTTPS.Listen address.
+
+[HTTPRedirect]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPRedirect.Listen
+;Listen = :80
+
+; -------------- Database Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#Database
+; PostgreSQL is recommended for production and high-availability deployments.
+; Uncomment and configure for PostgreSQL. Keep the password OUT of the URL: supply it
+; separately via Postgres.Password as a base64-encoded encrypted value (generate with:
+; /opt/rstudio-connect/bin/rscadmin encrypt-config-value).
+; SSL: Connect enables SSL by default. For production, append ?sslmode=verify-full to the
+; URL to enforce full server-certificate validation (use ?sslmode=disable to turn SSL off).
+; https://docs.posit.co/connect/admin/database/postgres/#ssl
+
+[Database]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#Database.Provider
+;Provider = postgres
+
+[Postgres]
+
+; TODO: Set to your PostgreSQL host/database (omit the password here)
+; https://docs.posit.co/connect/admin/appendix/configuration/#Postgres.URL
+;URL = "postgres://username@hostname:5432/database?sslmode=verify-full"
+
+; TODO: Set to your base64-encoded encrypted password (use: rscadmin encrypt-config-value)
+; https://docs.posit.co/connect/admin/appendix/configuration/#Postgres.Password
+;Password = "<base64 encrypted password value>"
 
 ; -------------- SMTP Email Configuration -------------- ;
 ;
@@ -74,59 +122,26 @@
 ; for most organizations. Configure host, port, and authentication details here.
 
 [SMTP]
+
 ; TODO: Set to your SMTP relay hostname
+; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.Host
 ;Host = "smtp.example.com"
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.Port
 ;Port = 25
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.SSL
 ;SSL = false
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.StartTLS
 ;StartTLS = "detect"
 
 ; TODO: Set if your SMTP relay requires authentication
+; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.User
 ;User = "smtp-user"
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SMTP.Password
 ;Password = "smtp-password"
-
-; -------------- HTTP Redirect Configuration -------------- ;
-;
-; https://docs.posit.co/connect/admin/security/index.html#guaranteeing-https
-; Automatically redirects HTTP traffic to HTTPS when Permanent is enabled below.
-
-[HTTPRedirect]
-Listen = :80
-
-; -------------- HTTPS / TLS Configuration -------------- ;
-;
-; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS
-; HTTPS configuration including certificates, TLS versions, and secure cookie settings.
-; Permanent=true enables HSTS (HTTP Strict Transport Security) which forces browsers to
-; always use HTTPS, even if users type http:// in the address bar.
-
-[HTTPS]
-
-; Posit Connect will listen on this network address for HTTPS connections
-Listen = :443
-
-; Path to a PEM encoded TLS certificate file. If the certificate is signed by a certificate
-; authority, the certificate file should be the concatenation of the server's certificate
-; followed by the CA's certificate
-; TODO: Set to the path of your TLS certificate file
-;Certificate = /etc/rstudio-connect/certs/connect.crt
-
-; Path to a PEM encoded private key file corresponding to the certificate specified above
-; TODO: Set to the path of your TLS private key file
-;Key = /etc/rstudio-connect/certs/connect.key
-
-; Permanent enables HSTS (HTTP Strict Transport Security) and sets secure flag on cookies
-; WARNING: Setting this to true will force HTTPS permanently in browsers
-; https://docs.posit.co/connect/admin/security/index.html#guaranteeing-https
-Permanent = true
-
-; StrictTransportSecurityMaxAge customizes the HSTS max-age (added in 2024.09.0). Only
-; takes effect when Permanent = true. Default is 30 days; 1 year (below) is a common value.
-; https://docs.posit.co/connect/admin/appendix/configuration/#HTTPS.StrictTransportSecurityMaxAge
-;StrictTransportSecurityMaxAge = 8760h
-
-; MinimumTLS restricts to TLS 1.2 and above for security hardening
-; https://docs.posit.co/connect/admin/security/index.html#strong-https
-MinimumTLS = 1.2
 
 ; -------------- R Configuration -------------- ;
 ;
@@ -137,9 +152,32 @@ MinimumTLS = 1.2
 ; matching strategy to control compatibility (nearest, major-minor, or exact).
 
 [R]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#R.Enabled
+Enabled = true
+
 ; TODO: Set one Executable line per installed R version (full path to the R binary)
-;Executable = /opt/R/4.4.2/bin/R
-;Executable = /opt/R/4.3.3/bin/R
+; https://docs.posit.co/connect/admin/appendix/configuration/#R.Executable
+;Executable = /opt/R/4.6.1/bin/R
+;Executable = /opt/R/4.5.3/bin/R
+
+; -------------- R Package Source Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository
+; This option allows you to set repositories to use your internal Package Manager or
+; Posit Public Package Manager to pull binary packages which install much more quickly.
+; Note: This will override your data scientists' CRAN repository, but generally results
+; in a much smoother Connect experience with faster package installations.
+;
+; Defaults to Posit Public Package Manager using portable manylinux binaries, which
+; bundle their system dependencies and work on any glibc 2.28+ Linux distribution.
+; Point this at your own Package Manager instance if you have one.
+; TODO: Replace with your internal Package Manager CRAN repo URL if applicable
+
+[RPackageRepository "CRAN"]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#RPackageRepository.URL
+URL = "https://packagemanager.posit.co/cran/__linux__/manylinux_2_28/latest"
 
 ; -------------- Python Configuration -------------- ;
 ;
@@ -149,10 +187,30 @@ MinimumTLS = 1.2
 ; https://docs.posit.co/connect/admin/python/package-management/#using-pip
 
 [Python]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#Python.Enabled
 Enabled = true
+
 ; TODO: Set one Executable line per installed Python version (full path to the python binary)
-;Executable = /opt/python/3.12.4/bin/python
-;Executable = /opt/python/3.11.9/bin/python
+; https://docs.posit.co/connect/admin/appendix/configuration/#Python.Executable
+;Executable = /opt/python/3.14.6/bin/python
+;Executable = /opt/python/3.13.14/bin/python
+
+; -------------- Python Package Source Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#PythonPackageRepository
+; Configures the PyPI index used when installing content dependencies. Naming the section
+; "PyPI" replaces the default pypi.org index. Using Package Manager provides faster, more
+; reliable installs of pre-built binary wheels.
+;
+; Defaults to Posit Public Package Manager. Point this at your own Package Manager
+; instance if you have one.
+; TODO: Replace with your internal Package Manager PyPI repo URL if applicable
+
+[PythonPackageRepository "PyPI"]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#PythonPackageRepository.URL
+URL = "https://packagemanager.posit.co/pypi/latest/simple"
 
 ; -------------- Quarto Configuration -------------- ;
 ;
@@ -162,21 +220,82 @@ Enabled = true
 ; after configuration changes.
 
 [Quarto]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#Quarto.Enabled
 Enabled = true
+
 ; TODO: Set one Executable line per installed Quarto version (full path to the quarto binary)
-;Executable = /opt/quarto/1.5.57/bin/quarto
+; https://docs.posit.co/connect/admin/appendix/configuration/#Quarto.Executable
+;Executable = /opt/quarto/1.9.38/bin/quarto
+
+; -------------- Node.js Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#NodeJs
+; Node.js enables publishing and running of Node.js applications. Generally available
+; since Connect 2026.06.0 (requires an Advanced Connect license). Multiple Node.js
+; versions can be configured; Connect selects one based on the content's package.json
+; engines.node constraint. Enabled and Executable require a server restart to take effect.
+
+[NodeJs]
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#NodeJs.Enabled
+Enabled = true
+
+; TODO: Set one Executable line per installed Node.js version (full path to the node binary)
+; https://docs.posit.co/connect/admin/appendix/configuration/#NodeJs.Executable
+;Executable = /opt/node/22.22.1/bin/node
 
 ; -------------- Logging Configuration -------------- ;
 ;
-; https://docs.posit.co/connect/admin/logging/
+; https://docs.posit.co/connect/admin/appendix/configuration/#Logging
 ; Access and Service logs enable you to gain a better understanding of the function
-; of Connect. This configuration uses JSON format, which is more accessible to
-; programmatic log ingestion and is still human readable. Logs rotate automatically
-; using logrotate (daily retention: 30 days for access/service, 12 months for audit).
+; of Connect. The settings below show the documented defaults. JSON formats are more
+; accessible to programmatic log ingestion; set the *Format options to JSON to opt in.
+; Logs rotate automatically using logrotate.
 
 [Logging]
-AccessLogFormat = JSON
-ServiceLogFormat = JSON
+
+; AccessLog is the file path for HTTP access logs
+; https://docs.posit.co/connect/admin/appendix/configuration/#Logging.AccessLog
+;AccessLog = /var/log/rstudio/rstudio-connect/rstudio-connect.access.log
+
+; AccessLogFormat accepts COMMON, COMBINED, or JSON
+; https://docs.posit.co/connect/admin/appendix/configuration/#Logging.AccessLogFormat
+;AccessLogFormat = COMMON
+
+; ServiceLog is the file path for service logs (defaults to STDOUT in the container image)
+; https://docs.posit.co/connect/admin/appendix/configuration/#Logging.ServiceLog
+;ServiceLog = /var/log/rstudio/rstudio-connect/rstudio-connect.log
+
+; ServiceLogFormat accepts TEXT or JSON
+; https://docs.posit.co/connect/admin/appendix/configuration/#Logging.ServiceLogFormat
+;ServiceLogFormat = TEXT
+
+; ServiceLogLevel accepts INFO, WARN, or ERROR (reloadable without a restart)
+; https://docs.posit.co/connect/admin/appendix/configuration/#Logging.ServiceLogLevel
+;ServiceLogLevel = INFO
+
+; -------------- Authentication Configuration -------------- ;
+;
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication
+; Controls high-level authentication behaviors including session lifetime, inactivity
+; timeouts, and API key authentication. Shorter session lifetimes and inactivity timeouts
+; improve security at the cost of requiring more frequent re-authentication.
+
+[Authentication]
+
+; Authentication provider - uncomment one (saml, oauth2, password, pam, ldap, proxy)
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.Provider
+;Provider = saml
+;Provider = oauth2
+
+; Lifetime controls maximum session duration before requiring re-authentication
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.Lifetime
+Lifetime = 12h
+
+; Inactivity controls idle timeout before requiring re-authentication
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication.Inactivity
+Inactivity = 8h
 
 ; -------------- Authorization / Permissions Configuration -------------- ;
 ;
@@ -189,40 +308,54 @@ ServiceLogFormat = JSON
 [Authorization]
 
 ; Prevents viewers from seeing other Connect users (security hardening)
-; https://docs.posit.co/connect/admin/appendix/branding/#viewer-authorization-restrictions
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.ViewersCanOnlySeeThemselves
 ViewersCanOnlySeeThemselves = true
 
 ; Automatically map incoming users to Connect roles based on group membership
-; For SAML: https://docs.posit.co/connect/admin/authentication/saml-based/saml/#using-group-memberships
-; For OIDC: https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
-; TODO: Set each *RoleMapping to the IdP group name that should receive that Connect role
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.UserRoleGroupMapping
 ;UserRoleGroupMapping = true
+
+; TODO: Set each *RoleMapping to the IdP group name that should receive that Connect role
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.ViewerRoleMapping
 ;ViewerRoleMapping = "connect-viewers"
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.PublisherRoleMapping
 ;PublisherRoleMapping = "connect-publishers"
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#Authorization.AdministratorRoleMapping
 ;AdministratorRoleMapping = "connect-admins"
 
-; -------------- Authentication Configuration -------------- ;
+; -------------- OAuth2 / OpenID Connect Configuration -------------- ;
 ;
-; https://docs.posit.co/connect/admin/appendix/configuration/#Authentication
-; Controls high-level authentication behaviors including session lifetime, inactivity
-; timeouts, and API key authentication. Shorter session lifetimes and inactivity timeouts
-; improve security at the cost of requiring more frequent re-authentication.
+; https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/
+; OpenID Connect authentication configuration. Supports group-based auto-provisioning
+; and can restrict access by domain or email address. RegisterOnFirstLogin=false
+; requires API-based user provisioning for tighter access control.
 
-[Authentication]
+[OAuth2]
 
-; Authentication provider - uncomment one (saml, oauth2, password, pam, ldap, proxy)
-;Provider = saml
-;Provider = oauth2
+; TODO: Set these to your IdP's OIDC client credentials and issuer URL
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.ClientId
+;ClientId = "your-client-id"
 
-; Lifetime controls maximum session duration before requiring re-authentication
-; https://docs.posit.co/connect/admin/security/index.html#limiting-session-lifetime
-Lifetime = 12h
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.ClientSecret
+;ClientSecret = "your-client-secret"
 
-; Inactivity controls idle timeout before requiring re-authentication
-Inactivity = 8h
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.OpenIDConnectIssuer
+;OpenIDConnectIssuer = "https://idp.example.com"
 
-; APIKeyAuth enables API key authentication for programmatic access
-APIKeyAuth = true
+; Automatically create groups from OAuth2/OIDC claims
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.GroupsAutoProvision
+;GroupsAutoProvision = true
+
+; PKCE (Proof Key for Code Exchange) is enabled by default since 2026.01.0.
+; Only set this to false if your IdP does not support PKCE.
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.UsePKCE
+;UsePKCE = false
+
+; Enable verbose OAuth2 logging for troubleshooting authentication issues
+; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.Logging
+;Logging = true
 
 ; -------------- SAML Authentication Configuration -------------- ;
 ;
@@ -235,67 +368,42 @@ APIKeyAuth = true
 
 ; IdP Metadata - use URL for internet-connected systems or Path for air-gapped
 ; TODO: Set one of the following to your IdP's SAML metadata location
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPMetaDataURL
 ;IdPMetaDataURL = https://idp.example.com/saml/metadata
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPMetaDataPath
 ;IdPMetaDataPath = /etc/rstudio-connect/saml/idp-metadata.xml
 
+; Group membership management
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.GroupsAttribute
+;GroupsAttribute = Groups
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.GroupsAutoProvision
+;GroupsAutoProvision = true
+
 ; Post binding is required for many IDPs, most commonly for Azure
-IdPSingleSignOnPostBinding = true
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.IdPSingleSignOnPostBinding
+;IdPSingleSignOnPostBinding = true
 
 ; SAML attribute mapping - adjust these based on your IdP's SAML assertions
-UniqueIDAttribute = NameID
-NameIDFormat = unspecified
-UsernameAttribute = Username
-FirstNameAttribute = FirstName
-LastNameAttribute = LastName
-EmailAttribute = Email
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.UniqueIDAttribute
+;UniqueIDAttribute = NameID
 
-; Group membership management
-; https://docs.posit.co/connect/admin/authentication/saml-based/saml/#saml-groups
-GroupsAttribute = Groups
-GroupsAutoProvision = true
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.NameIDFormat
+;NameIDFormat = unspecified
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.UsernameAttribute
+;UsernameAttribute = Username
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.FirstNameAttribute
+;FirstNameAttribute = FirstName
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.LastNameAttribute
+;LastNameAttribute = LastName
+
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.EmailAttribute
+;EmailAttribute = Email
 
 ; Enable verbose SAML logging for troubleshooting authentication issues
-;Logging = true
-
-; -------------- OAuth2 / OpenID Connect Configuration -------------- ;
-;
-; https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/
-; OpenID Connect authentication configuration. Supports group-based auto-provisioning
-; and can restrict access by domain or email address. RegisterOnFirstLogin=false
-; requires API-based user provisioning for tighter access control.
-
-[OAuth2]
-
-; TODO: Set these to your IdP's OIDC client credentials and issuer URL
-;ClientId = "your-client-id"
-;ClientSecret = "your-client-secret"
-;OpenIDConnectIssuer = "https://idp.example.com"
-
-; PKCE (Proof Key for Code Exchange) is enabled by default since 2026.01.0.
-; Only set this to false if your IdP does not support PKCE.
-; https://docs.posit.co/connect/admin/appendix/configuration/#OAuth2.UsePKCE
-;UsePKCE = false
-
-; Require username claim in tokens (recommended)
-RequireUsernameClaim = true
-
-; Automatically create groups from OAuth2/OIDC claims
-; https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#using-group-memberships
-GroupsAutoProvision = true
-
-; Restrict login to specific groups (recommended for access control)
-; https://docs.posit.co/connect/admin/authentication/oauth2-openid-based/openid-connect/#user-provisioning
-;PermittedLoginGroup = "connect-users"
-;PermittedLoginGroup = "data-science-team"
-
-; Restrict login to specific email domains
-;AllowedDomain = "company.com"
-
-; Restrict login to specific email addresses
-;AllowedEmail = "user@company.com"
-
-; Disable automatic user registration (requires API-based provisioning)
-;RegisterOnFirstLogin = false
-
-; Enable verbose OAuth2 logging for troubleshooting authentication issues
+; https://docs.posit.co/connect/admin/appendix/configuration/#SAML.Logging
 ;Logging = true
